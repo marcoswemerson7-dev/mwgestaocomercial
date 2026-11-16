@@ -141,23 +141,10 @@ create policy auditoria_por_gerente on public.auditoria_eventos for select to au
 revoke all on public.estabelecimentos,public.usuarios_estabelecimentos,public.caixas,public.sessoes_caixa,public.movimentacoes_caixa,public.fechamentos_caixa,public.manifestacoes,public.manifestacoes_respostas,public.auditoria_eventos from anon,authenticated;
 grant select on public.estabelecimentos,public.usuarios_estabelecimentos,public.caixas,public.sessoes_caixa,public.movimentacoes_caixa,public.fechamentos_caixa,public.manifestacoes,public.manifestacoes_respostas,public.auditoria_eventos to authenticated;
 
--- Função pública recebe manifestações. Limitar frequência no gateway/edge/WAF ANTES de publicar.
-create sequence public.protocolo_manifestacao_seq;
-create or replace function public.enviar_manifestacao(p_slug text,p_categoria text,p_mensagem text,p_nome text default null,p_contato text default null)
-returns text
-language plpgsql security definer set search_path = '' as $$
-declare v_unidade uuid; v_protocolo text;
-begin
- if p_categoria not in ('sugestao','reclamacao','duvida','elogio') or char_length(trim(coalesce(p_mensagem,''))) not between 10 and 2000 then
-  raise exception 'Dados inválidos';
- end if;
- if char_length(coalesce(p_nome,''))>120 or char_length(coalesce(p_contato,''))>160 then raise exception 'Dados inválidos'; end if;
- select id into v_unidade from public.estabelecimentos where slug=p_slug and ativo=true;
- if v_unidade is null then raise exception 'Estabelecimento indisponível'; end if;
- v_protocolo:='AT-'||to_char(now() at time zone 'America/Fortaleza','YYYY')||'-'||lpad(nextval('public.protocolo_manifestacao_seq')::text,7,'0');
- insert into public.manifestacoes(estabelecimento_id,protocolo,categoria,mensagem,nome,contato)
- values(v_unidade,v_protocolo,p_categoria,trim(p_mensagem),nullif(trim(coalesce(p_nome,'')),''),nullif(trim(coalesce(p_contato,'')),''));
- return v_protocolo;
-end $$;
-revoke all on function public.enviar_manifestacao(text,text,text,text,text) from public;
-grant execute on function public.enviar_manifestacao(text,text,text,text,text) to anon,authenticated;
+
+-- O envio público de manifestações só será habilitado após controle de abuso no servidor.
+-- Funções de consulta de autorização usadas exclusivamente nas políticas RLS.
+revoke all on function public.pode_acessar_estabelecimento(uuid) from public,anon;
+revoke all on function public.pode_administrar_estabelecimento(uuid) from public,anon;
+grant execute on function public.pode_acessar_estabelecimento(uuid) to authenticated;
+grant execute on function public.pode_administrar_estabelecimento(uuid) to authenticated;
