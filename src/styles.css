@@ -43,3 +43,41 @@ body,.main{background:var(--bg);color:var(--ink)}.sidebar{background:var(--sideb
 .setup-message svg{flex-shrink:0}
 [data-theme="dark"] .setup-message{background:#1b3934;border-color:#355a51;color:#b0e2d1}
 @media(max-width:500px){.login-modern{padding:30px 24px}}
+
+
+/* Login institucional MW Gestão Comercial */
+.commercial-login{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;color:#0c2337;background:#f3f7f8}
+.login-hero{min-height:100vh;padding:clamp(34px,5vw,88px);display:flex;flex-direction:column;justify-content:space-between;position:relative;isolation:isolate;overflow:hidden;background:linear-gradient(120deg,rgba(2,32,47,.98),rgba(2,65,72,.82)),url("https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=1400&q=85") center/cover;color:white}
+.login-hero:after{content:"";position:absolute;z-index:-1;width:105%;height:280px;bottom:-175px;left:-10px;transform:rotate(-8deg);background:linear-gradient(110deg,#006d68,#07a080);border-top:5px solid #e7b953;border-radius:50% 50% 0 0}
+.hero-brand{display:flex;gap:15px;align-items:center;font-size:21px;letter-spacing:-.7px}
+.hero-brand img{width:53px;height:53px;border-radius:14px;box-shadow:0 9px 24px #0004}
+.hero-body{max-width:680px;margin:45px 0}
+.hero-body h2{font-size:clamp(35px,4vw,69px);font-weight:800;line-height:1.1;letter-spacing:-2px;margin:0 0 28px}
+.hero-body h2 em{color:#f2cc7b;font-style:normal}
+.hero-body>p{font-size:clamp(15px,1.45vw,21px);line-height:1.55;max-width:580px;color:#e2eeee;margin:0 0 36px}
+.hero-points{display:grid;gap:13px;font-size:15px;font-weight:650}
+.hero-points>div{display:flex;align-items:center;gap:13px}
+.hero-points svg{width:42px;height:42px;padding:10px;background:#047c783d;border-radius:11px;color:#e1f5f0}
+.hero-bottom{font-size:12px;letter-spacing:.2px;color:#bad1d0;position:relative;z-index:1}
+.login-access{display:grid;place-items:center;padding:clamp(24px,5vw,80px);background:radial-gradient(ellipse at 100% 0%,#dcf2ed 0,transparent 45%),#f3f7f8}
+.login-access-card{width:min(100%,580px);border-radius:25px;background:#fff;box-shadow:0 28px 80px #002b3b1a;padding:clamp(28px,4vw,58px);border:1px solid #e7edf0}
+.login-brand{text-align:center}
+.login-brand img{width:80px;height:80px;display:block;margin:0 auto 24px;filter:drop-shadow(0 8px 12px #1d806c33)}
+.login-brand h1{font-size:clamp(26px,2.3vw,36px);line-height:1.15;letter-spacing:-1.2px;color:#092339;margin:0 0 9px}
+.login-brand p{margin:0;color:#657387;font-size:14px;line-height:1.5}
+.login-units{display:flex;align-items:center;gap:12px;text-align:center;justify-content:center;color:#607085;font-weight:650;font-size:12px;margin:30px 0}
+.login-units span{height:1px;background:linear-gradient(90deg,#eab958,#d6e2dc);flex:1;max-width:60px}
+.login-auth-form,.login-fields{display:grid;gap:20px}
+.login-fields label{font-weight:700;font-size:13px;color:#34465b;gap:9px}
+.login-fields input{min-height:54px;padding:14px 16px;border-radius:10px;border-color:#d9e2e9;font-size:14px}
+.login-fields input:focus{border-color:#0d957c;box-shadow:0 0 0 3px #1099801c}
+.login-password{position:relative}
+.login-extras{display:flex;justify-content:space-between;align-items:center;font-size:12px;color:#64758a;gap:10px}
+.login-extras .ghost{padding:0;color:#087b65}
+.login-submit{min-height:57px;background:linear-gradient(100deg,#079d77,#006656);font-size:15px;box-shadow:0 12px 25px #087e6b29}
+.login-submit:hover{background:linear-gradient(100deg,#00886f,#005748)}
+.login-footnote{display:block;text-align:center;font-size:11px;color:#94a3b0;margin-top:26px;padding-top:23px;border-top:1px solid #e7edf0}
+.login-access-card .setup-message{margin-top:18px}
+[data-theme="dark"] .commercial-login{color:#0c2337}
+@media(max-width:980px){.commercial-login{grid-template-columns:1fr}.login-hero{min-height:unset;padding:25px 30px}.hero-brand{font-size:17px}.hero-brand img{width:42px;height:42px}.hero-body,.hero-bottom{display:none}.login-access{min-height:calc(100vh - 92px)}}
+@media(max-width:520px){.login-hero{padding:19px}.login-access{padding:20px 14px;align-items:start}.login-access-card{padding:30px 22px;border-radius:18px}.login-brand img{width:66px;height:66px}.login-units{font-size:11px;gap:7px}.login-units span{max-width:26px}.login-brand h1{font-size:27px}}
