@@ -1,4 +1,4 @@
-# Vitória Gestão
+# MW Gestão Comercial
 
 Sistema financeiro e caixa diário para Supermercado Vitória e Açaí Vitória, desenvolvido pela MW TECH SISTEMAS LTDA.
 
