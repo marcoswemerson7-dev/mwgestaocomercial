@@ -1,6 +1,6 @@
 # MW Gestão Comercial
 
-Sistema financeiro e caixa diário para Supermercado Vitória e Açaí Vitória, desenvolvido pela MW TECH SISTEMAS LTDA.
+Painel gerencial de controle financeiro e acompanhamento de atendimentos para Supermercado Vitória e Açaí Vitória, desenvolvido pela MW TECH SISTEMAS LTDA.
 
 Tecnologias: React, Vite, TypeScript, Tailwind CSS, Supabase.
 
@@ -25,3 +25,11 @@ A aplicação apresenta o painel inicial e o portal de atendimento. Para persist
 - O conector Vercel disponível nesta sessão não lista o projeto `mwgestaocomercial`; não mudar variáveis do projeto `mw-tech-financeiro`.
 - Cadastrar usuário em Authentication > Users e atribuir permissões em `usuarios_estabelecimentos` antes de usar o painel. Os registros financeiros ainda são somente leitura até implementar operações seguras.
 - O portal de manifestações ficará bloqueado até implementar proteção contra abuso, privacidade e API de envio.
+
+## Painel gerencial — atualização 16/11/2026
+- Tela principal após login: Visão Geral, Atendimento (QR Code), Financeiro, Relatórios, Configurações.
+- Sem operação de PDV ou caixa diário no fluxo principal. Foco em consultas e acompanhamento gerencial.
+- Indicadores usam dados reais de `movimentacoes_caixa` e manifestações recebidas; valores não são simulados.
+- Atendimento consulta `manifestacoes`, ligada a `estabelecimentos` por FK, com status `recebida`, `em_analise`, `respondida`, `concluida`.
+- O sistema requer permissões cadastradas em `usuarios_estabelecimentos` para cada usuário; sem essas permissões, a RLS pode mostrar tabelas vazias.
+- A imagem dos painéis é referência visual; logotipos estilizados dos banners são provisórios enquanto não são incorporados os arquivos originais.
