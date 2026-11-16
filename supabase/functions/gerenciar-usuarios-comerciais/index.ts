@@ -1,5 +1,5 @@
 import {createClient} from "npm:@supabase/supabase-js@2";
-const origins=["https://mwgestaocomercial.vercel.app","http://localhost:5173"];
+const origins=["https://mwgestaocomercial.vercel.app","https://comercial.mwtechsistemas.com.br","http://localhost:5173"];
 const cors=(o:string)=>({"Content-Type":"application/json","Access-Control-Allow-Origin":origins.includes(o)?o:origins[0],"Access-Control-Allow-Headers":"authorization,apikey,content-type,x-client-info","Access-Control-Allow-Methods":"POST,OPTIONS","Vary":"Origin","Cache-Control":"no-store"});
 const emailForCpf=(cpf:string)=>cpf+"@login.mwgestaocomercial.com.br";
 const modules=["dashboard","caixa","movimentacoes","despesas","fechamento","relatorios","opinioes","usuarios","estabelecimentos"];
