@@ -50,3 +50,10 @@ A aplicação apresenta o painel inicial e o portal de atendimento. Para persist
 - O painel gerencial permite buscar mensagens por protocolo/nome/conteúdo, filtrar situações, visualizar histórico de respostas e registrar providências com a RPC `gerenciar_manifestacao`, que valida permissão de administrador/gerente por estabelecimento.
 - As imagens atualmente referenciadas no código são os arquivos transparentes `public/brands/supermercado-vitoria.svg` e `public/brands/acai-vitoria.svg`, que existem no repositório e não dependem dos antigos caminhos PNG inexistentes. Versões PNG externas podem ser adicionadas depois preservando os mesmos nomes-base.
 - Validação SQL: o recebimento gerou protocolo dentro de transação desfeita, sem criar mensagem de teste permanente. Função Edge está ativa; envio real via navegador e build/deploy Vercel ainda não verificados.
+
+## Correção final da identidade PNG (16/11/2026)
+- `npm run build` executa automaticamente `scripts/generate-brands.mjs` via `prebuild`, criando `public/brands/supermercado-vitoria.png` e `public/brands/acai-vitoria.png` a partir das imagens originais presentes nos SVGs da pasta brands.
+- O script amplia e trata transparência nas bordas, evitando retângulos de fundo sobre as faixas coloridas. O PNG é o formato principal; o SVG segue como fallback.
+- `npm run dev` usa `predev` para disponibilizar os mesmos PNGs no desenvolvimento.
+- As logomarcas são aplicadas a banners do painel, relatórios, atendimento do cliente e cartões do gerente.
+- Se a Vercel não atualizar automaticamente, execute um redeploy usando o commit mais recente no repositório. **Build de produção não foi verificado nesta sessão.**
