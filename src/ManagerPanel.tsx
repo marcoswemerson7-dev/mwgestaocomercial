@@ -19,6 +19,21 @@ const navGroups:{title:string;items:{id:View;label:string;icon:typeof LayoutDash
 {title:"GESTÃO FINANCEIRA",items:[{id:"caixa",label:"Caixa do Dia",icon:Wallet},{id:"financeiro",label:"Entradas e Saídas",icon:ArrowDownLeft},{id:"despesas",label:"Despesas",icon:ReceiptText},{id:"fechamento",label:"Fechamento Diário",icon:CheckCircle2}]},
 {title:"ADMINISTRAÇÃO",items:[{id:"relatorios",label:"Relatórios",icon:FileText},{id:"usuarios",label:"Usuários e Gerentes",icon:Users},{id:"configuracoes",label:"Estabelecimentos",icon:Settings}]}];
 const nav=navGroups.flatMap(g=>g.items);
+type ModuleKey="dashboard"|"caixa"|"movimentacoes"|"despesas"|"fechamento"|"relatorios"|"opinioes"|"usuarios"|"estabelecimentos";
+type ManagedUser={id:string;nome:string;cpf:string|null;grants:{slug:string;perfil:string;ativo:boolean}[];modulos:{slug:string;modulo:string;permitido:boolean}[]};
+const moduleOptions:{id:ModuleKey;label:string;description:string}[]=[
+{id:"dashboard",label:"Visão Geral",description:"Indicadores e gráficos financeiros"},
+{id:"caixa",label:"Caixa do Dia",description:"Consultar e lançar caixa diário"},
+{id:"movimentacoes",label:"Entradas e Saídas",description:"Registrar, editar e cancelar lançamentos"},
+{id:"despesas",label:"Despesas",description:"Registrar e consultar saídas"},
+{id:"fechamento",label:"Fechamento Diário",description:"Conferir e finalizar caixa"},
+{id:"relatorios",label:"Relatórios",description:"Visualizar e emitir relatórios"},
+{id:"opinioes",label:"Opiniões dos Clientes",description:"Ler e responder manifestações"},
+{id:"usuarios",label:"Usuários e Gerentes",description:"Administração dos cadastros"},
+{id:"estabelecimentos",label:"Estabelecimentos",description:"Visualizar configurações"}
+];
+const viewModule:Partial<Record<View,ModuleKey>>={dashboard:"dashboard",caixa:"caixa",financeiro:"movimentacoes",despesas:"despesas",fechamento:"fechamento",relatorios:"relatorios",atendimento:"opinioes",usuarios:"usuarios",configuracoes:"estabelecimentos"};
+
 const localDay=()=>{const d=new Date();return [d.getFullYear(),String(d.getMonth()+1).padStart(2,"0"),String(d.getDate()).padStart(2,"0")].join("-")};
 function dateStart(period:string){const d=new Date();d.setHours(0,0,0,0);if(period==="7")d.setDate(d.getDate()-6);else if(period==="30")d.setDate(d.getDate()-29);else if(period==="mes")d.setDate(1);else d.setFullYear(d.getFullYear(),0,1);return [d.getFullYear(),String(d.getMonth()+1).padStart(2,"0"),String(d.getDate()).padStart(2,"0")].join("-");}
 const companyInfo={legalName:"SUPERMERCADO E AÇAITERIA VITÓRIA LTDA",tradingName:"Supermercado e Açaiteria Vitória",cnpj:"88.445.203/0001-10",address:"R. Inácio Martins de Loiola, 8N — Bela Vista — Ribeiro Gonçalves/PI"};
@@ -72,7 +87,11 @@ export default function ManagerPanel({entries,loading,error,onSignOut}:Props){
  const [balanceStart,setBalanceStart]=useState("0"),[balanceCounted,setBalanceCounted]=useState(""),[closingNote,setClosingNote]=useState("");
  const [saving,setSaving]=useState(false),[actionMessage,setActionMessage]=useState("");
  const [displayForm,setDisplayForm]=useState(false);
- const [inviteEmail,setInviteEmail]=useState(""),[inviteRole,setInviteRole]=useState("gerente");
+ const [staffName,setStaffName]=useState(""),[staffCpf,setStaffCpf]=useState(""),[staffPassword,setStaffPassword]=useState(""),[showStaffPassword,setShowStaffPassword]=useState(false);
+ const [staffRole,setStaffRole]=useState("gerente"),[staffUnits,setStaffUnits]=useState<string[]>(["supermercado"]),[staffModules,setStaffModules]=useState<ModuleKey[]>(["dashboard","caixa","movimentacoes","despesas","fechamento","relatorios","opinioes"]);
+ const [staffEditingId,setStaffEditingId]=useState<string|null>(null),[managedUsers,setManagedUsers]=useState<ManagedUser[]>([]),[staffLoading,setStaffLoading]=useState(false),[staffMessage,setStaffMessage]=useState("");
+ const [modulesGranted,setModulesGranted]=useState<{usuario_id:string;estabelecimento_id:string;modulo:string;permitido:boolean}[]>([]);
+ const [permissionsReady,setPermissionsReady]=useState(false);
  const [collapsed,setCollapsed]=useState(()=>localStorage.getItem("mw-comercial-sidebar")==="1");
  const [groupsOpen,setGroupsOpen]=useState<string[]>(()=>navGroups.map(x=>x.title));
  const [dark,setDark]=useState(()=>localStorage.getItem("mw-comercial-dark")==="1");
@@ -87,25 +106,63 @@ export default function ManagerPanel({entries,loading,error,onSignOut}:Props){
  async function changeProfilePassword(e:React.FormEvent){e.preventDefault();if(!supabase)return;if(profilePassword.length<8||profilePassword!==profilePasswordConfirm){setProfileMessage("A senha deve ter pelo menos 8 caracteres e a confirmação precisa ser igual.");return}setProfileBusy(true);setProfileMessage("");const {error}=await supabase.auth.updateUser({password:profilePassword});setProfileBusy(false);if(error)setProfileMessage("Não foi possível trocar a senha: "+error.message);else{setProfilePassword("");setProfilePasswordConfirm("");setProfileMessage("Senha atualizada com sucesso.")}}
  async function uploadAvatar(file:File){if(!supabase||!profileUserId)return;setProfileMessage("");if(!["image/jpeg","image/png","image/webp"].includes(file.type)||file.size>2097152){setProfileMessage("Envie uma foto JPG, PNG ou WebP de até 2 MB.");return}setProfileBusy(true);const ext=file.type==="image/png"?"png":file.type==="image/webp"?"webp":"jpg";const path=profileUserId+"/avatar-"+Date.now()+"."+ext;const {error}=await supabase.storage.from("mw-comercial-avatars").upload(path,file,{contentType:file.type,upsert:false});if(error){setProfileMessage("Falha ao enviar foto: "+error.message);setProfileBusy(false);return}const updated=await supabase.auth.updateUser({data:{avatar_path:path}});if(updated.error)setProfileMessage("Foto enviada, mas não foi possível vincular ao perfil: "+updated.error.message);else{const {data}=await supabase.storage.from("mw-comercial-avatars").createSignedUrl(path,3600);if(data?.signedUrl)setPhotoUrl(data.signedUrl);setProfileMessage("Foto de perfil atualizada.")}setProfileBusy(false)}
  
- async function inviteManager(e:React.FormEvent){
-  e.preventDefault();setSaving(true);setActionMessage("");
-  if(!supabase){setActionMessage("Conexão indisponível.");setSaving(false);return}
-  const {data,error}=await supabase.functions.invoke("convidar-gerente-comercial",{body:{email:inviteEmail.trim().toLowerCase(),slug:operationUnit,role:inviteRole}});
-  setActionMessage(error?(data?.error||"Não foi possível enviar o convite. Verifique as permissões e o e-mail."):data?.message||"Convite solicitado.");
-  if(!error&&data?.ok){setInviteEmail("");await reloadFinance()}
-  setSaving(false);
+  const adminUnits=unitsDb.filter(u=>permissions.some(p=>p.usuario_id===profileUserId&&p.estabelecimento_id===u.id&&p.ativo&&p.perfil==="administrador"));
+ const ownUnits=unitsDb.filter(u=>permissions.some(p=>p.usuario_id===profileUserId&&p.estabelecimento_id===u.id&&p.ativo));
+ function allowedModule(mod:ModuleKey,slug?:string){
+  if(!permissionsReady)return true;
+  const list=slug?ownUnits.filter(u=>u.slug===slug):ownUnits;
+  return list.some(u=>permissions.some(p=>p.usuario_id===profileUserId&&p.estabelecimento_id===u.id&&p.ativo&&p.perfil==="administrador")||modulesGranted.some(m=>m.usuario_id===profileUserId&&m.estabelecimento_id===u.id&&m.modulo===mod&&m.permitido));
  }
+ const allowedView=(v:View)=>v==="perfil"||allowedModule(viewModule[v]||"dashboard");
+ const selectableUnits=permissionsReady?units.filter(u=>ownUnits.some(p=>p.slug===u.slug)):units;
+ useEffect(()=>{if(!permissionsReady)return;if(view!=="perfil"&&!allowedView(view)){const first=nav.find(n=>allowedView(n.id));if(first)setView(first.id)}if(!ownUnits.some(u=>u.slug===operationUnit)&&ownUnits.length)setOperationUnit(ownUnits[0].slug as "supermercado"|"acai")},[permissionsReady,permissions,modulesGranted,profileUserId,view,operationUnit]);
+ const navVisible=navGroups.map(g=>({...g,items:g.items.filter(n=>allowedView(n.id))})).filter(g=>g.items.length);
+ async function refreshManagedUsers(){
+  if(!supabase||!adminUnits.length)return;
+  setStaffLoading(true);
+  const {data,error}=await supabase.functions.invoke("gerenciar-usuarios-comerciais",{body:{action:"list"}});
+  if(error||!data?.ok)setStaffMessage(data?.error||"Falha ao consultar os usuários.");
+  else setManagedUsers((data.users||[]) as ManagedUser[]);
+  setStaffLoading(false);
+ }
+ useEffect(()=>{if(view==="usuarios"&&profileUserId&&adminUnits.length)void refreshManagedUsers()},[view,profileUserId,permissions]);
+ function resetStaffForm(){setStaffEditingId(null);setStaffName("");setStaffCpf("");setStaffPassword("");setStaffRole("gerente");setStaffUnits(adminUnits.length?[adminUnits[0].slug]:["supermercado"]);setStaffModules(["dashboard","caixa","movimentacoes","despesas","fechamento","relatorios","opinioes"]);setStaffMessage("")}
+ function editStaff(u:ManagedUser){if(!u.cpf){setStaffMessage("Esta conta existente não utiliza CPF. Seu cadastro original não será alterado.");return;}setStaffEditingId(u.id);setStaffName(u.nome);setStaffCpf(u.cpf);setStaffPassword("");setStaffRole(u.grants[0]?.perfil||"gerente");setStaffUnits(u.grants.filter(g=>g.ativo).map(g=>g.slug));setStaffModules(moduleOptions.filter(m=>u.modulos.some(x=>x.modulo===m.id&&x.permitido)).map(m=>m.id));setStaffMessage("");}
+ async function saveStaff(e:React.FormEvent){
+  e.preventDefault();setStaffMessage("");
+  if(!supabase)return;
+  if(!staffUnits.length){setStaffMessage("Selecione ao menos um estabelecimento.");return}
+  if(!staffEditingId&&staffPassword.length<10){setStaffMessage("A senha inicial precisa ter pelo menos 10 caracteres.");return}
+  setStaffLoading(true);
+  const {data,error}=await supabase.functions.invoke("gerenciar-usuarios-comerciais",{body:{action:staffEditingId?"update":"create",user_id:staffEditingId,nome:staffName,cpf:staffCpf,senha:staffPassword,perfil:staffRole,unidades:staffUnits,modulos:staffModules}});
+  setStaffLoading(false);
+  if(error||!data?.ok){setStaffMessage(data?.error||"Falha ao cadastrar o usuário. Confira os dados e tente novamente.");return}
+  resetStaffForm();setStaffMessage(data.message||"Usuário cadastrado.");await refreshManagedUsers();
+ }
+ async function resetStaffPassword(u:ManagedUser){
+  const newPassword=window.prompt("Digite a nova senha de "+u.nome+" (mínimo de 10 caracteres):");
+  if(newPassword===null)return;
+  if(newPassword.length<10){setStaffMessage("A nova senha deve ter pelo menos 10 caracteres.");return}
+  if(!window.confirm("Confirmar troca da senha de "+u.nome+"?"))return;
+  setStaffLoading(true);
+  const {data,error}=await supabase!.functions.invoke("gerenciar-usuarios-comerciais",{body:{action:"reset_password",user_id:u.id,senha:newPassword}});
+  setStaffLoading(false);setStaffMessage(error||!data?.ok?data?.error||"Falha na troca de senha.":data.message||"Senha alterada.");
+ }
+
  async function reloadFinance(){
   if(!supabase)return;
   setFinanceLoading(true);
-  const [u,p,f,cl]=await Promise.all([
+  const [u,p,m,f,cl]=await Promise.all([
    supabase.from("estabelecimentos").select("id,slug,nome").eq("ativo",true),
    supabase.from("usuarios_estabelecimentos").select("usuario_id,estabelecimento_id,perfil,ativo"),
+   supabase.from("usuarios_modulos").select("usuario_id,estabelecimento_id,modulo,permitido"),
    supabase.from("financeiro_lancamentos").select("id,estabelecimento_id,data_lancamento,tipo,categoria,descricao,valor,forma_pagamento,estabelecimentos!inner(slug)").is("cancelado_em",null).order("data_lancamento",{ascending:false}).limit(2000),
    supabase.from("financeiro_fechamentos").select("id,estabelecimento_id,data_fechamento,saldo_inicial,saldo_informado,entradas,saidas,saldo_calculado,observacao").order("data_fechamento",{ascending:false}).limit(400)
   ]);
   if(u.data)setUnitsDb(u.data as typeof unitsDb);
   if(p.data)setPermissions(p.data as typeof permissions);
+  if(m.data)setModulesGranted(m.data as typeof modulesGranted);
+  setPermissionsReady(true);
   if(cl.data)setClosures(cl.data as typeof closures);
   if(f.error)setFinanceError("Não foi possível consultar o financeiro. Verifique as permissões do usuário.");
   else{setFinanceError("");setFinance((f.data||[]).map((v:any)=>({id:v.id,unit:v.estabelecimentos.slug,type:v.tipo,category:v.categoria,desc:v.descricao,amount:Number(v.valor),method:v.forma_pagamento,date:v.data_lancamento})))}
