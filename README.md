@@ -43,3 +43,10 @@ A aplicação apresenta o painel inicial e o portal de atendimento. Para persist
 - Rota pública do atendimento corrigida: slug obtido do caminho `/atendimento/:slug`, não mais de `useParams` sem contexto de rota.
 - Logomarcas em `public/brands/supermercado-vitoria.png` e `public/brands/acai-vitoria.png` ainda **não existem** no repositório; incluir arquivos originais para reprodução visual fiel.
 - Publicação automática na Vercel e compilação de produção ainda **não verificadas** pela conexão disponível.
+
+## Atendimento e logomarcas — 16/11/2026
+- Formulários públicos nas rotas `/atendimento/supermercado` e `/atendimento/acai` passam a exibir a marca da unidade no cabeçalho e acima do formulário.
+- Corrigida a chamada inexistente a `enviar_manifestacao`: envio agora usa Edge Function `receber-atendimento-comercial` (sem JWT, com validação de dados/origem e limitação de até cinco mensagens por IP/hora no banco). Ela chama a RPC restrita `registrar_manifestacao_publica` e retorna protocolo.
+- O painel gerencial permite buscar mensagens por protocolo/nome/conteúdo, filtrar situações, visualizar histórico de respostas e registrar providências com a RPC `gerenciar_manifestacao`, que valida permissão de administrador/gerente por estabelecimento.
+- As imagens atualmente referenciadas no código são os arquivos transparentes `public/brands/supermercado-vitoria.svg` e `public/brands/acai-vitoria.svg`, que existem no repositório e não dependem dos antigos caminhos PNG inexistentes. Versões PNG externas podem ser adicionadas depois preservando os mesmos nomes-base.
+- Validação SQL: o recebimento gerou protocolo dentro de transação desfeita, sem criar mensagem de teste permanente. Função Edge está ativa; envio real via navegador e build/deploy Vercel ainda não verificados.
