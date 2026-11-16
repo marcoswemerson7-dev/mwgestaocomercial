@@ -92,6 +92,7 @@ export default function ManagerPanel({entries,loading,error,onSignOut}:Props){
  const [staffEditingId,setStaffEditingId]=useState<string|null>(null),[managedUsers,setManagedUsers]=useState<ManagedUser[]>([]),[staffLoading,setStaffLoading]=useState(false),[staffMessage,setStaffMessage]=useState("");
  const [modulesGranted,setModulesGranted]=useState<{usuario_id:string;estabelecimento_id:string;modulo:string;permitido:boolean}[]>([]);
  const [permissionsReady,setPermissionsReady]=useState(false);
+ const [resetPasswordUser,setResetPasswordUser]=useState<ManagedUser|null>(null),[resetPasswordValue,setResetPasswordValue]=useState("");
  const [collapsed,setCollapsed]=useState(()=>localStorage.getItem("mw-comercial-sidebar")==="1");
  const [groupsOpen,setGroupsOpen]=useState<string[]>(()=>navGroups.map(x=>x.title));
  const [dark,setDark]=useState(()=>localStorage.getItem("mw-comercial-dark")==="1");
@@ -139,14 +140,14 @@ export default function ManagerPanel({entries,loading,error,onSignOut}:Props){
   if(error||!data?.ok){setStaffMessage(data?.error||"Falha ao cadastrar o usuário. Confira os dados e tente novamente.");return}
   resetStaffForm();setStaffMessage(data.message||"Usuário cadastrado.");await refreshManagedUsers();
  }
- async function resetStaffPassword(u:ManagedUser){
-  const newPassword=window.prompt("Digite a nova senha de "+u.nome+" (mínimo de 10 caracteres):");
-  if(newPassword===null)return;
-  if(newPassword.length<10){setStaffMessage("A nova senha deve ter pelo menos 10 caracteres.");return}
-  if(!window.confirm("Confirmar troca da senha de "+u.nome+"?"))return;
-  setStaffLoading(true);
-  const {data,error}=await supabase!.functions.invoke("gerenciar-usuarios-comerciais",{body:{action:"reset_password",user_id:u.id,senha:newPassword}});
-  setStaffLoading(false);setStaffMessage(error||!data?.ok?data?.error||"Falha na troca de senha.":data.message||"Senha alterada.");
+ async function resetStaffPassword(e:React.FormEvent){
+  e.preventDefault();if(!supabase||!resetPasswordUser)return;
+  if(resetPasswordValue.length<10){setStaffMessage("A nova senha deve ter pelo menos 10 caracteres.");return}
+  setStaffLoading(true);setStaffMessage("");
+  const {data,error}=await supabase.functions.invoke("gerenciar-usuarios-comerciais",{body:{action:"reset_password",user_id:resetPasswordUser.id,senha:resetPasswordValue}});
+  setStaffLoading(false);
+  setStaffMessage(error||!data?.ok?data?.error||"Falha na troca de senha.":data.message||"Senha alterada.");
+  if(!error&&data?.ok){setResetPasswordValue("");setResetPasswordUser(null)}
  }
 
  async function reloadFinance(){
@@ -264,7 +265,8 @@ function openEditEntry(row:Entry){if(!canManageRow(row)){setActionMessage("Movim
  {view==="usuarios"&&<>{heading("Usuários e Gerentes","Cadastre acessos com CPF e senha, escolha os estabelecimentos e libere apenas os módulos necessários.")}
  <div className="mg-users-layout">
  <section className="mg-card mg-users-list"><div className="mg-card-heading"><div><h3>Usuários cadastrados</h3><p>Gerencie os acessos das unidades que você administra.</p></div><button className="mg-btn secondary" type="button" onClick={()=>void refreshManagedUsers()} disabled={staffLoading}><Activity size={16}/> Atualizar</button></div>
- {adminUnits.length===0?<div className="mg-empty-warning">Somente um administrador pode cadastrar ou modificar usuários.</div>:staffLoading?<div className="mg-info-note">Consultando usuários...</div>:managedUsers.length===0?<div className="mg-no-data">Nenhum usuário disponível nas unidades administradas.</div>:<div className="mg-table-wrap"><table><thead><tr><th>Usuário</th><th>Login</th><th>Estabelecimentos</th><th>Perfil</th><th>Ações</th></tr></thead><tbody>{managedUsers.map(u=><tr key={u.id}><td><strong>{u.nome}</strong></td><td>{u.cpf?u.cpf.replace(/^(\d{3})(\d{3})(\d{3})(\d{2})$/,"$1.$2.$3-$4"):"Conta por e-mail"}</td><td>{u.grants.filter(g=>g.ativo).map(g=>unitName(g.slug)).join(" • ")}</td><td>{u.grants.map(g=>g.perfil).filter((v,i,a)=>a.indexOf(v)===i).join(", ")}</td><td><div className="mg-row-actions"><button type="button" title="Editar usuário" onClick={()=>editStaff(u)} disabled={!u.cpf||staffLoading}><Pencil size={16}/></button><button type="button" title="Redefinir senha" onClick={()=>void resetStaffPassword(u)} disabled={staffLoading||u.id===profileUserId}><LockKeyhole size={16}/></button></div></td></tr>)}</tbody></table></div>}
+ {adminUnits.length===0?<div className="mg-empty-warning">Somente um administrador pode cadastrar ou modificar usuários.</div>:staffLoading?<div className="mg-info-note">Consultando usuários...</div>:managedUsers.length===0?<div className="mg-no-data">Nenhum usuário disponível nas unidades administradas.</div>:<div className="mg-table-wrap"><table><thead><tr><th>Usuário</th><th>Login</th><th>Estabelecimentos</th><th>Perfil</th><th>Ações</th></tr></thead><tbody>{managedUsers.map(u=><tr key={u.id}><td><strong>{u.nome}</strong></td><td>{u.cpf?u.cpf.replace(/^(\d{3})(\d{3})(\d{3})(\d{2})$/,"$1.$2.$3-$4"):"Conta por e-mail"}</td><td>{u.grants.filter(g=>g.ativo).map(g=>unitName(g.slug)).join(" • ")}</td><td>{u.grants.map(g=>g.perfil).filter((v,i,a)=>a.indexOf(v)===i).join(", ")}</td><td><div className="mg-row-actions"><button type="button" title="Editar usuário" onClick={()=>editStaff(u)} disabled={!u.cpf||staffLoading}><Pencil size={16}/></button><button type="button" title="Redefinir senha" onClick={()=>{setResetPasswordUser(u);setResetPasswordValue("");setStaffMessage("")}} disabled={staffLoading||u.id===profileUserId}><LockKeyhole size={16}/></button></div></td></tr>)}</tbody></table></div>}
+ {resetPasswordUser&&<form className="mg-password-reset" onSubmit={resetStaffPassword}><div><strong>Redefinir senha de {resetPasswordUser.nome}</strong><small>Informe uma senha nova de pelo menos 10 caracteres. A senha anterior não será exibida.</small></div><input type="password" autoComplete="new-password" minLength={10} maxLength={128} required value={resetPasswordValue} onChange={e=>setResetPasswordValue(e.target.value)} placeholder="Nova senha segura"/><div className="mg-user-form-buttons"><button type="submit" className="mg-btn primary" disabled={staffLoading}><LockKeyhole size={16}/> Salvar nova senha</button><button type="button" className="mg-btn secondary" onClick={()=>{setResetPasswordUser(null);setResetPasswordValue("")}}>Cancelar</button></div></form>}
  <div className="mg-info-note"><ShieldCheck size={18}/> A senha não aparece nesta listagem. Cada usuário entra com seu CPF e a senha definida. Contas antigas por e-mail continuam funcionando.</div></section>
  <section className="mg-card mg-users-create"><div className="mg-card-heading"><div><h3>{staffEditingId?"Editar usuário":"Cadastrar novo usuário / gerente"}</h3><p>Defina identidade, estabelecimentos e permissões.</p></div><Users size={20}/></div>
  <form className="mg-finance-form mg-users-form" onSubmit={saveStaff} autoComplete="off">
