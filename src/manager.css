@@ -637,3 +637,69 @@
  .mg-report-premium .mg-report-final-result{font-size:9px!important;padding:7px 5px!important}
  .mg-report-premium footer{font-size:7px!important;margin-top:10px!important;padding-top:8px!important;flex-direction:row!important;break-inside:avoid}
 }
+
+
+/* Navegação direta pelos indicadores do painel */
+.mg-dashboard-kpi-link{position:relative;display:block;min-width:0;padding:0;text-align:left;background:transparent;border:0;border-radius:16px;cursor:pointer;color:inherit}
+.mg-dashboard-kpi-link>.mg-metric{height:100%;min-height:120px;padding-right:27px}
+.mg-dashboard-kpi-link:focus-visible,.mg-unit-open:focus-visible{outline:3px solid #13ae79;outline-offset:3px}
+.mg-kpi-arrow{position:absolute;right:10px;top:13px;color:#438b77;opacity:.65;transition:transform .18s ease,opacity .18s ease}
+.mg-dashboard-kpi-link:hover .mg-kpi-arrow{opacity:1;transform:translateX(3px)}
+.mg-unit-open{position:relative;border:0;padding:0;margin:0;background:transparent;cursor:pointer;color:inherit;text-align:left;min-width:0;border-radius:18px}
+.mg-unit-open .mg-unit{height:100%;transition:transform .18s ease,box-shadow .18s ease}
+.mg-unit-open:hover .mg-unit{transform:translateY(-3px);box-shadow:0 11px 23px #002b4440}
+.mg-unit-open-label{position:absolute;right:16px;bottom:14px;display:flex;align-items:center;gap:3px;color:#fff;font-size:10px;font-weight:800;z-index:3;text-shadow:0 1px 4px #0009}
+.mg-plate-trigger{display:flex;margin-top:15px;justify-content:center;font-size:12px}
+.mg-qr-content>div{min-width:0}
+.mg-qr-content p{max-width:400px}
+.mg-dark .mg-dashboard-kpi-link{color:var(--mg-text)}
+/* Placa individual para pesquisa de satisfação, A4 */
+.mg-plate-overlay{position:fixed;inset:0;z-index:100;background:#092a35bf;display:flex;align-items:flex-start;justify-content:center;overflow-y:auto;padding:26px 16px}
+.mg-plate-dialog{width:min(660px,100%);border-radius:18px;background:#fff;color:#0e2839;box-shadow:0 25px 75px #001a2e4b;padding:20px}
+.mg-plate-toolbar{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;padding:4px 0 18px}
+.mg-plate-toolbar>div:first-child{display:grid;gap:5px}
+.mg-plate-toolbar strong{font-size:15px}
+.mg-plate-toolbar small{font-size:11px;color:#698391}
+.mg-plate-toolbar-actions{display:flex;flex-wrap:wrap;gap:8px}
+.mg-print-plate{width:100%;max-width:560px;min-height:720px;margin:auto;display:flex;flex-direction:column;background:#fff;border:2px solid #e6ebef;border-radius:15px;overflow:hidden;color:#092c39;text-align:center}
+.mg-plate-heading{min-height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px 28px 16px;gap:10px;background:linear-gradient(120deg,#0539c1,#06227d);color:#fff;position:relative}
+.mg-plate-heading:after{content:"";position:absolute;bottom:-2px;width:100%;height:10px;background:#ffcf20}
+.mg-print-plate-acai .mg-plate-heading{background:linear-gradient(120deg,#641276,#922a9b)}
+.mg-plate-logo{height:132px;width:min(100%,390px);display:flex;align-items:center;justify-content:center}
+.mg-plate-logo .mg-brand-image{height:130px!important;max-height:130px!important;width:100%;max-width:100%;object-fit:contain;filter:drop-shadow(0 3px 5px #0004)}
+.mg-plate-heading>span{font-size:13px;font-weight:900;letter-spacing:3px}
+.mg-plate-body{flex:1;padding:27px 24px 18px;display:flex;align-items:center;flex-direction:column}
+.mg-plate-eyebrow{font-weight:900;color:#008a66;font-size:11px;letter-spacing:2px}
+.mg-print-plate-acai .mg-plate-eyebrow{color:#8e2ca5}
+.mg-plate-body h2{font-size:30px;line-height:1.16;margin:10px 0;letter-spacing:-.7px}
+.mg-plate-body>p{font-size:14px;line-height:1.5;max-width:390px;margin:8px auto 14px}
+.mg-plate-qr{background:white;padding:12px;box-shadow:0 4px 20px #002c4e14;border:2px solid #d9e4e8;border-radius:17px;display:grid;place-items:center;margin:8px auto 14px}
+.mg-plate-qr svg{width:230px;height:230px;max-width:100%;display:block;shape-rendering:crispEdges}
+.mg-plate-body>strong{font-size:12px;letter-spacing:1.3px;color:#053b35}
+.mg-plate-topics{display:grid;grid-template-columns:repeat(2,1fr);gap:9px;width:min(100%,380px);margin:18px auto 4px}
+.mg-plate-topics span{font-size:12px;font-weight:850;border:1px solid #dce9e8;border-radius:9px;padding:10px;color:#174b52;background:#f4faf8}
+.mg-plate-fine{font-size:10px!important;color:#657d88;margin-top:15px!important}
+.mg-plate-foot{background:#f0f7f7;padding:15px;display:grid;gap:4px;border-top:1px solid #d9e7e9}
+.mg-plate-foot strong{font-size:13px}
+.mg-plate-foot small{font-size:11px;color:#668490}
+@media(max-width:650px){.mg-plate-overlay{padding:10px}.mg-plate-dialog{padding:12px}.mg-plate-toolbar-actions{width:100%}.mg-print-plate{min-height:630px}.mg-plate-heading{min-height:150px}.mg-plate-logo{height:90px}.mg-plate-logo .mg-brand-image{height:90px!important;max-height:90px!important}.mg-plate-body{padding:18px 12px}.mg-plate-body h2{font-size:23px}.mg-plate-qr svg{width:200px;height:200px}}
+@media print{
+ @page{size:A4 portrait;margin:0}
+ html,body,#root{width:210mm!important;min-height:297mm!important;background:#fff!important}
+ body *{visibility:hidden!important}
+ .mg-plate-overlay,.mg-plate-overlay *{visibility:visible!important}
+ .mg-plate-overlay{position:absolute!important;top:0!important;left:0!important;right:auto!important;bottom:auto!important;width:210mm!important;height:297mm!important;max-height:none!important;padding:0!important;margin:0!important;background:white!important;overflow:visible!important;display:block!important}
+ .mg-plate-dialog{width:210mm!important;height:297mm!important;max-width:none!important;padding:0!important;margin:0!important;border:0!important;border-radius:0!important;box-shadow:none!important;background:#fff!important}
+ .mg-plate-toolbar{display:none!important}
+ .mg-print-plate{width:210mm!important;height:297mm!important;max-width:none!important;min-height:0!important;margin:0!important;border:0!important;border-radius:0!important;break-inside:avoid!important}
+ .mg-plate-heading{min-height:76mm!important;padding:12mm 15mm 10mm!important;print-color-adjust:exact!important;-webkit-print-color-adjust:exact!important}
+ .mg-plate-logo{height:47mm!important;width:145mm!important}
+ .mg-plate-logo .mg-brand-image{height:43mm!important;max-height:43mm!important}
+ .mg-plate-body{padding:13mm 15mm 8mm!important}
+ .mg-plate-body h2{font-size:35px!important;margin:6mm auto 3mm!important}
+ .mg-plate-body>p{font-size:16px!important}
+ .mg-plate-qr{padding:5mm!important;margin:5mm auto!important}
+ .mg-plate-qr svg{width:78mm!important;height:78mm!important}
+ .mg-plate-topics span,.mg-plate-foot{print-color-adjust:exact!important;-webkit-print-color-adjust:exact!important}
+ .mg-plate-foot{padding:6mm!important}
+}
