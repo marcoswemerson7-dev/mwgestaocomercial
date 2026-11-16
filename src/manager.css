@@ -703,3 +703,11 @@
  .mg-plate-topics span,.mg-plate-foot{print-color-adjust:exact!important;-webkit-print-color-adjust:exact!important}
  .mg-plate-foot{padding:6mm!important}
 }
+
+
+/* Ação contextual para restaurar os filtros do relatório */
+.mg-report-actions .mg-reset-filters{display:inline-flex;align-items:center;justify-content:center;gap:7px;background:var(--mg-card);border:1px solid var(--mg-stroke);color:var(--mg-text);box-shadow:none;font-weight:750}
+.mg-report-actions .mg-reset-filters:hover{border-color:#0a9874;color:#078366;background:#e9f7f1}
+.mg-dark .mg-report-actions .mg-reset-filters:hover{background:#25453e;color:#b9edd8}
+@media(max-width:600px){.mg-report-actions{flex-wrap:wrap}.mg-report-actions .mg-reset-filters{flex:1 1 100%}}
+@media print{.mg-report-actions .mg-reset-filters{display:none!important}}
