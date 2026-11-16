@@ -786,3 +786,10 @@
 @media(max-width:1050px){.mg-user-modules{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:620px){.mg-user-checkboxes,.mg-user-modules{grid-template-columns:1fr}.mg-user-password{flex-wrap:wrap}.mg-users-list .mg-table-wrap{overflow-x:auto}.mg-users-list table{min-width:650px}}
 @media print{.mg-users-create,.mg-user-form-buttons{display:none!important}}
+
+
+.mg-password-reset{margin:17px 0;display:grid;gap:13px;padding:17px;border-radius:12px;border:1px solid var(--mg-stroke);background:var(--mg-bg)}
+.mg-password-reset>div:first-child{display:grid;gap:7px}
+.mg-password-reset strong{font-size:13px;color:var(--mg-text)}
+.mg-password-reset small{font-size:11px;color:var(--mg-muted)}
+.mg-password-reset>input{width:100%;padding:12px;border:1px solid var(--mg-stroke);border-radius:9px;background:var(--mg-card);color:var(--mg-text)}
