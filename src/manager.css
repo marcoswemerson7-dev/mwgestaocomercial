@@ -196,3 +196,39 @@
 .mg-unit-info span{overflow-wrap:anywhere}
 @media(max-width:650px){.mg-ticket-filters,.mg-ticket-meta{grid-template-columns:1fr}.mg-ticket-workspace{padding:18px}}
 .mg-dark .mg-ticket-filters input,.mg-dark .mg-ticket-filters select,.mg-dark .mg-ticket-action-form select,.mg-dark .mg-ticket-action-form textarea{background:#243c42;color:#f0f8f7;border-color:#47636b}
+
+
+/* Financeiro por estabelecimento — edição, cancelamento e filtros de relatórios */
+.mg-side-company-select{display:grid;gap:5px;margin:4px 3px 10px 14px;padding-left:8px;border-left:1px solid #4b857f}
+.mg-side-company{width:100%;background:transparent;color:#c5dedb;border:1px solid transparent;border-radius:9px;padding:10px 8px;display:flex;align-items:center;gap:9px;font-size:11px;font-weight:700;text-align:left;cursor:pointer}
+.mg-side-company:hover,.mg-side-company.active{background:#1f6e60;border-color:#4eaa92;color:white}
+.mg-company-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+.mg-company-dot.supermercado{background:#397afe}.mg-company-dot.acai{background:#df60e5}
+.mg-finance-unit-tabs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px;margin:0 0 18px}
+.mg-finance-unit-tab{display:flex;align-items:center;justify-content:center;gap:16px;min-height:85px;padding:12px 20px;border-radius:13px;border:2px solid transparent;opacity:.77;cursor:pointer;background:linear-gradient(120deg,#0b47c1,#092b83);color:white;transition:opacity .15s,border-color .15s,box-shadow .15s}
+.mg-finance-unit-tab.mg-acai{background:linear-gradient(120deg,#7a177c,#5c135f)}
+.mg-finance-unit-tab.selected{opacity:1;border-color:#f4c650;box-shadow:0 8px 22px #164f571e}
+.mg-finance-unit-tab img{height:52px;width:min(44%,205px);object-fit:contain}
+.mg-finance-unit-tab span{font-size:13px;font-weight:800;letter-spacing:.1px}
+.mg-actions-cell{text-align:right!important;min-width:115px}
+.mg-row-actions{display:flex;align-items:center;justify-content:flex-end;gap:8px}
+.mg-row-actions button{border:1px solid #cfe4df;background:#eaf6f1;color:#08785f;cursor:pointer;padding:8px;border-radius:7px;display:grid;place-items:center}
+.mg-row-actions button:hover{background:#d3f0e5}
+.mg-row-actions .mg-row-cancel{color:#ce3944;background:#fff0f1;border-color:#f2d4d8}
+.mg-row-actions .mg-row-cancel:hover{background:#ffe0e2}
+.mg-row-actions button:disabled{opacity:.6;cursor:not-allowed}
+.mg-row-locked{font-size:10px;color:#8498a0;white-space:nowrap}
+.mg-report-filter-bar{display:flex;align-items:flex-end;gap:13px;flex-wrap:wrap;background:var(--mg-card);border:1px solid var(--mg-stroke);padding:18px;margin-bottom:14px;border-radius:13px}
+.mg-report-filter-bar label{display:grid;gap:6px;flex:1;min-width:160px;color:var(--mg-text);font-size:11px;font-weight:800}
+.mg-report-filter-bar input,.mg-report-filter-bar select{min-height:40px;border:1px solid var(--mg-stroke);border-radius:9px;padding:10px 12px;background:var(--mg-card);color:var(--mg-text);font-size:12px;width:100%;color-scheme:inherit}
+.mg-report-filter-bar input:focus-visible,.mg-report-filter-bar select:focus-visible{outline:2px solid #15997d;outline-offset:1px}
+.mg-edit-modal{width:min(96vw,620px)!important}
+.mg-edit-date{display:grid;gap:6px;font-size:12px;font-weight:700;margin-top:17px;color:var(--mg-text)}
+.mg-edit-date input{padding:12px;border-radius:9px;background:var(--mg-card);border:1px solid var(--mg-stroke);color:var(--mg-text)}
+.mg-edit-modal .mg-finance-form{margin-top:16px}
+.mg-dark .mg-report-filter-bar input,.mg-dark .mg-report-filter-bar select{background:#21353b;color:#e6f2f1;border-color:#456065}
+.mg-dark .mg-row-actions button{background:#244c45;border-color:#48776c;color:#9ee5c9}
+.mg-dark .mg-row-actions .mg-row-cancel{background:#4c2d32;color:#ffb7bb;border-color:#78434a}
+@media(max-width:900px){.mg-side-company-select{margin-left:14px}.mg-sidebar.mg-collapsed .mg-side-company span:last-child{display:inline}}
+@media(max-width:600px){.mg-finance-unit-tabs{grid-template-columns:1fr}.mg-finance-unit-tab{min-height:75px}.mg-report-filter-bar{padding:12px}.mg-report-filter-bar label{min-width:140px}.mg-row-actions{gap:5px}.mg-row-actions button{padding:7px}}
+@media print{.mg-report-filter-bar,.mg-side-company-select,.mg-actions-cell,.mg-row-actions{display:none!important}}
