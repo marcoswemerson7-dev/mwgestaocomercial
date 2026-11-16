@@ -1,1 +1,17 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128"><defs><linearGradient id="mw" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#00a9ac"/><stop offset=".5" stop-color="#139864"/><stop offset="1" stop-color="#e8aa2d"/></linearGradient></defs><rect width="128" height="128" rx="27" fill="url(#mw)"/><text x="64" y="79" font-size="54" font-weight="800" font-family="Arial,Helvetica,sans-serif" text-anchor="middle" fill="#fff" letter-spacing="-5">MW</text></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-labelledby="title desc">
+<title id="title">MW Gestão Comercial</title><desc id="desc">Monograma MW com barras de crescimento e arco dourado</desc>
+<defs>
+ <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#073c42"/><stop offset=".55" stop-color="#006b5b"/><stop offset="1" stop-color="#009477"/></linearGradient>
+ <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ffe39a"/><stop offset=".55" stop-color="#e8ae37"/><stop offset="1" stop-color="#c58a18"/></linearGradient>
+ <linearGradient id="letters" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#fff"/><stop offset="1" stop-color="#e0f2ec"/></linearGradient>
+</defs>
+<rect x="8" y="8" width="224" height="224" rx="49" fill="url(#bg)"/>
+<path d="M47 90 C77 44 147 32 188 76" fill="none" stroke="url(#gold)" stroke-width="8" stroke-linecap="round"/>
+<path d="M170 70 L190 78 L184 55" fill="none" stroke="#edb53f" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="122" y="58" width="11" height="25" rx="2" fill="#efbb4d"/>
+<rect x="139" y="47" width="11" height="36" rx="2" fill="#f5c967"/>
+<rect x="156" y="33" width="11" height="50" rx="2" fill="#ffe19b"/>
+<path d="M35 165 L49 98 L67 98 L86 137 L105 98 L123 98 L138 165 L118 165 L110 127 L94 159 L78 159 L61 126 L54 165Z" fill="url(#letters)"/>
+<path d="M126 99 L146 99 L157 140 L171 112 L183 140 L194 99 L214 99 L191 165 L177 165 L165 139 L153 165 L139 165Z" fill="url(#letters)"/>
+<path d="M54 184 C86 205 155 207 194 175" fill="none" stroke="url(#gold)" stroke-width="8" stroke-linecap="round"/>
+</svg>
