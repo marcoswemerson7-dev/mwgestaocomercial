@@ -1,5 +1,5 @@
 import {useEffect,useMemo,useState} from "react";
-import {Activity,AlertTriangle,ArrowDownLeft,ArrowUpRight,BarChart3,Bell,CalendarDays,ChevronDown,ChevronLeft,ChevronRight,PanelLeftClose,PanelLeftOpen,Moon,Sun,UserRound,Camera,LockKeyhole,Mail,CheckCircle2,Clock3,Download,ExternalLink,FileText,Headphones,LayoutDashboard,LogOut,Menu,MessageCircle,MessageSquare,Printer,Settings,ShieldCheck,Store,TrendingUp,Wallet,Users,Plus,Save,ReceiptText,X} from "lucide-react";
+import {Activity,AlertTriangle,ArrowDownLeft,ArrowUpRight,BarChart3,Bell,CalendarDays,ChevronDown,ChevronLeft,ChevronRight,PanelLeftClose,PanelLeftOpen,Moon,Sun,UserRound,Camera,LockKeyhole,Mail,CheckCircle2,Clock3,Download,ExternalLink,FileText,Headphones,LayoutDashboard,LogOut,Menu,MessageCircle,MessageSquare,Printer,Settings,ShieldCheck,Store,TrendingUp,Wallet,Users,Plus,Save,ReceiptText,Pencil,Trash2,X} from "lucide-react";
 import {Area,AreaChart,CartesianGrid,Cell,Legend,Pie,PieChart,ResponsiveContainer,Tooltip,XAxis,YAxis} from "recharts";
 import {QRCodeSVG} from "qrcode.react";
 import {supabase} from "./lib/supabase";
@@ -51,6 +51,14 @@ export default function ManagerPanel({entries,loading,error,onSignOut}:Props){
   if(error){setReplyError("Não foi possível atualizar o atendimento: "+error.message);setReplySaving(false);return}
   setSelectedTicket(null);setReplyMessage("");setReplySaving(false);await refreshTickets();
  }
+ const [editingEntry,setEditingEntry]=useState<Entry|null>(null);
+ const [cancellingId,setCancellingId]=useState<string|null>(null);
+ const [reportUnit,setReportUnit]=useState<Unit>("todos");
+ const [reportPeriod,setReportPeriod]=useState<"dia"|"mes"|"intervalo"|"30">("mes");
+ const [reportDay,setReportDay]=useState(localDay());
+ const [reportMonth,setReportMonth]=useState(localDay().slice(0,7));
+ const [reportStart,setReportStart]=useState(localDay().slice(0,8)+"01");
+ const [reportEnd,setReportEnd]=useState(localDay());
  const [finance,setFinance]=useState<Entry[]>([]);
  const [financeLoading,setFinanceLoading]=useState(true),[financeError,setFinanceError]=useState("");
  const [unitsDb,setUnitsDb]=useState<{id:string;slug:string;nome:string}[]>([]);
@@ -104,7 +112,8 @@ export default function ManagerPanel({entries,loading,error,onSignOut}:Props){
  }
  useEffect(()=>{void reloadFinance()},[]);
  const dbUnit=unitsDb.find(x=>x.slug===operationUnit);
- const canManage=!!dbUnit&&permissions.some(p=>p.estabelecimento_id===dbUnit.id&&p.ativo&&["administrador","gerente","financeiro"].includes(p.perfil));
+ const canManage=!!dbUnit&&!!profileUserId&&permissions.some(p=>p.usuario_id===profileUserId&&p.estabelecimento_id===dbUnit.id&&p.ativo&&["administrador","gerente","financeiro"].includes(p.perfil));
+ const canManageRow=(row:Entry)=>{const company=unitsDb.find(u=>u.slug===row.unit);return !!company&&!!profileUserId&&permissions.some(p=>p.usuario_id===profileUserId&&p.estabelecimento_id===company.id&&p.ativo&&["administrador","gerente","financeiro"].includes(p.perfil))&&!closures.some(c=>c.estabelecimento_id===company.id&&c.data_fechamento===row.date)};
  const daily=finance.filter(x=>x.unit===operationUnit&&x.date===operationDate);
  const dailyIn=daily.filter(x=>x.type==="entrada").reduce((s,x)=>s+x.amount,0);
  const dailyOut=daily.filter(x=>x.type==="saida").reduce((s,x)=>s+x.amount,0);
@@ -116,12 +125,23 @@ export default function ManagerPanel({entries,loading,error,onSignOut}:Props){
   if(closedDay){setActionMessage("Este dia já foi fechado. Não é possível lançar novas movimentações.");return}
   if(!Number.isFinite(value)||value<=0||entryDesc.trim().length<3){setActionMessage("Informe descrição e valor válido.");return}
   setSaving(true);
-  const {error}=await supabase.from("financeiro_lancamentos").insert({estabelecimento_id:dbUnit.id,data_lancamento:operationDate,tipo:entryType,categoria:entryCategory.trim(),descricao:entryDesc.trim(),valor:value,forma_pagamento:entryMethod});
+  const payload={data_lancamento:operationDate,tipo:entryType,categoria:entryCategory.trim(),descricao:entryDesc.trim(),valor:value,forma_pagamento:entryMethod};
+  const {error}=editingEntry
+    ?await supabase.from("financeiro_lancamentos").update(payload).eq("id",editingEntry.id).eq("estabelecimento_id",dbUnit.id).is("cancelado_em",null)
+    :await supabase.from("financeiro_lancamentos").insert({...payload,estabelecimento_id:dbUnit.id});
   if(error)setActionMessage("Falha ao salvar: "+error.message);
-  else{setActionMessage("Lançamento gravado com sucesso.");setEntryDesc("");setEntryValue("");setDisplayForm(false);await reloadFinance()}
+  else{setActionMessage(editingEntry?"Lançamento atualizado com sucesso.":"Lançamento gravado com sucesso.");setEntryDesc("");setEntryValue("");setDisplayForm(false);setEditingEntry(null);await reloadFinance()}
   setSaving(false);
  }
- async function saveClosing(e:React.FormEvent){
+function openEditEntry(row:Entry){if(!canManageRow(row)){setActionMessage("Movimentação sem permissão ou pertencente a um dia fechado.");return}setEditingEntry(row);setEntryType(row.type);setEntryCategory(row.category);setEntryDesc(row.desc);setEntryValue(String(row.amount));setEntryMethod(row.method);setOperationUnit(row.unit);setOperationDate(row.date);setActionMessage("")}
+ async function cancelEntry(row:Entry){if(!supabase||!canManageRow(row)){setActionMessage("Movimentação sem permissão ou pertencente a um dia fechado.");return}
+ if(!window.confirm("Cancelar este lançamento de "+money(row.amount)+" de "+unitName(row.unit)+"? Ele permanecerá no histórico de auditoria e deixará de entrar nos totais."))return;
+ setCancellingId(row.id);setActionMessage("");
+ const unitId=unitsDb.find(u=>u.slug===row.unit)?.id;
+ const {error}=await supabase.from("financeiro_lancamentos").update({cancelado_em:new Date().toISOString()}).eq("id",row.id).eq("estabelecimento_id",unitId!).is("cancelado_em",null);
+ setCancellingId(null);if(error)setActionMessage("Não foi possível cancelar: "+error.message);else{setActionMessage("Lançamento cancelado e preservado no histórico.");await reloadFinance()}
+ }
+  async function saveClosing(e:React.FormEvent){
   e.preventDefault();setActionMessage("");
   if(!supabase||!dbUnit||!canManage||closedDay){setActionMessage("Sem autorização ou dia já fechado.");return}
   const start=Number(balanceStart),count=Number(balanceCounted);
@@ -136,7 +156,15 @@ export default function ManagerPanel({entries,loading,error,onSignOut}:Props){
  const financeIn=financeRows.filter(e=>e.type==="entrada").reduce((s,x)=>s+x.amount,0);
  const financeOut=financeRows.filter(e=>e.type==="saida").reduce((s,x)=>s+x.amount,0);
  const financeBalance=financeIn-financeOut;
- const financeUnitControls=<div className="mg-form-grid"><label>Estabelecimento<select value={operationUnit} onChange={e=>{setOperationUnit(e.target.value as "supermercado"|"acai");setActionMessage("")}}>{units.map(u=><option key={u.slug} value={u.slug}>{u.name}</option>)}</select></label><label>Data de movimento<input type="date" value={operationDate} max={localDay()} onChange={e=>{setOperationDate(e.target.value);setActionMessage("")}}/></label></div>;
+ const financeSelected=finance.filter(e=>e.unit===operationUnit&&e.date>=dateStart(period));
+ const reportRanges=reportPeriod==="dia"?[reportDay,reportDay]:reportPeriod==="mes"?[reportMonth+"-01",(()=>{const [y,m]=reportMonth.split("-").map(Number);return new Date(y,m,0).toLocaleDateString("en-CA")})()]:reportPeriod==="intervalo"?[reportStart,reportEnd]:[dateStart("30"),localDay()];
+ const reportRows=finance.filter(e=>(reportUnit==="todos"||e.unit===reportUnit)&&e.date>=reportRanges[0]&&e.date<=reportRanges[1]);
+ const reportIncoming=reportRows.filter(e=>e.type==="entrada").reduce((n,e)=>n+e.amount,0);
+ const reportOutgoing=reportRows.filter(e=>e.type==="saida").reduce((n,e)=>n+e.amount,0);
+ const reportResultByUnit=units.map(u=>({name:u.name,slug:u.slug,income:reportRows.filter(e=>e.unit===u.slug&&e.type==="entrada").reduce((n,e)=>n+e.amount,0),expense:reportRows.filter(e=>e.unit===u.slug&&e.type==="saida").reduce((n,e)=>n+e.amount,0)}));
+ const reportByCategory=Object.entries(reportRows.reduce((acc:Record<string,{in:number;out:number}>,e)=>{const k=e.category||"Não informada";if(!acc[k])acc[k]={in:0,out:0};acc[k][e.type==="entrada"?"in":"out"]+=e.amount;return acc},{})).sort((a,b)=>(b[1].in+b[1].out)-(a[1].in+a[1].out));
+ const unitTabs=<div className="mg-finance-unit-tabs" role="group" aria-label="Empresa financeira">{units.map(u=><button type="button" key={u.slug} className={"mg-finance-unit-tab "+(operationUnit===u.slug?"selected ":"")+"mg-"+u.slug} onClick={()=>{setOperationUnit(u.slug);setActionMessage("");setEditingEntry(null);setDisplayForm(false)}}><BrandLogo slug={u.slug}/><span>{u.name}</span></button>)}</div>;
+  const financeUnitControls=<div className="mg-form-grid"><label>Estabelecimento<select value={operationUnit} onChange={e=>{setOperationUnit(e.target.value as "supermercado"|"acai");setActionMessage("")}}>{units.map(u=><option key={u.slug} value={u.slug}>{u.name}</option>)}</select></label><label>Data de movimento<input type="date" value={operationDate} max={localDay()} onChange={e=>{setOperationDate(e.target.value);setActionMessage("")}}/></label></div>;
  const operationsForm=<form className="mg-finance-form" onSubmit={saveEntry}><div className="mg-form-grid"><label>Tipo<select value={entryType} onChange={e=>setEntryType(e.target.value as "entrada"|"saida")}><option value="entrada">Entrada</option><option value="saida">Saída</option></select></label><label>Categoria<input value={entryCategory} onChange={e=>setEntryCategory(e.target.value)} minLength={2} maxLength={90} required/></label></div><label>Descrição<input value={entryDesc} onChange={e=>setEntryDesc(e.target.value)} required minLength={3} maxLength={300} placeholder="Ex.: total recebido no dia / conta de energia"/></label><div className="mg-form-grid"><label>Valor (R$)<input type="number" min="0.01" step="0.01" required value={entryValue} onChange={e=>setEntryValue(e.target.value)}/></label><label>Forma de pagamento<select value={entryMethod} onChange={e=>setEntryMethod(e.target.value)}>{["Dinheiro","Pix","Débito","Crédito","Transferência","Boleto","Outro"].map(m=><option key={m}>{m}</option>)}</select></label></div><button className="mg-btn primary" disabled={saving||!canManage||!!closedDay}><Save size={16}/>{saving?"Salvando...":"Salvar lançamento"}</button></form>;
  const filtered=financeRows;
  const incoming=filtered.filter(e=>e.type==="entrada").reduce((s,e)=>s+e.amount,0),outgoing=filtered.filter(e=>e.type==="saida").reduce((s,e)=>s+e.amount,0),balance=incoming-outgoing;
@@ -151,7 +179,7 @@ export default function ManagerPanel({entries,loading,error,onSignOut}:Props){
  const noData=<div className="mg-no-data"><BarChart3 size={28}/><strong>Sem dados no período</strong><small>Os gráficos serão preenchidos automaticamente com as movimentações registradas.</small></div>;
  const heading=(title:string,desc:string)=><div className="mg-heading"><div><span className="mg-eyebrow">PAINEL GERENCIAL</span><h1>{title}</h1><p>{desc}</p></div></div>;
  return <div className={"mg-shell "+(dark?"mg-dark":"")}>
- <aside className={"mg-sidebar "+(mobile?"mg-show ":"")+(collapsed?"mg-collapsed":"")}><div className="mg-brand"><img src="/mw-gestao-logo.svg" alt="MW"/><div className="mg-brand-name"><strong>MW Gestão Comercial</strong><small>PLATAFORMA DE GESTÃO</small></div><button className="mg-close" onClick={()=>setMobile(false)}><X size={20}/></button></div><div className="mg-manager-pill">♛ <span>Painel do Gerente</span></div><nav>{navGroups.map(g=><div className="mg-nav-group" key={g.title}><button type="button" className="mg-menu-title mg-group-toggle" onClick={()=>setGroupsOpen(a=>a.includes(g.title)?a.filter(x=>x!==g.title):[...a,g.title])} title={g.title}><span>{g.title}</span><ChevronDown size={15} className={groupsOpen.includes(g.title)?"":"mg-rotate"}/></button>{(collapsed||groupsOpen.includes(g.title))&&g.items.map(n=><button key={n.id} type="button" title={n.label} className={"mg-nav "+(view===n.id?"active":"")} onClick={()=>{setView(n.id);setMobile(false);setActionMessage("")}}><n.icon size={19}/><span>{n.label}</span></button>)}</div>)}</nav><div className="mg-sidebar-footer"><span>● <span>Sistema de gestão</span></span><small>Criado e mantido pela<br/><strong>MW TECH SISTEMAS</strong></small></div></aside>
+ <aside className={"mg-sidebar "+(mobile?"mg-show ":"")+(collapsed?"mg-collapsed":"")}><div className="mg-brand"><img src="/mw-gestao-logo.svg" alt="MW"/><div className="mg-brand-name"><strong>MW Gestão Comercial</strong><small>PLATAFORMA DE GESTÃO</small></div><button className="mg-close" onClick={()=>setMobile(false)}><X size={20}/></button></div><div className="mg-manager-pill">♛ <span>Painel do Gerente</span></div><nav>{navGroups.map(g=><div className="mg-nav-group" key={g.title}><button type="button" className="mg-menu-title mg-group-toggle" onClick={()=>setGroupsOpen(a=>a.includes(g.title)?a.filter(x=>x!==g.title):[...a,g.title])} title={g.title}><span>{g.title}</span><ChevronDown size={15} className={groupsOpen.includes(g.title)?"":"mg-rotate"}/></button>{g.title==="GESTÃO FINANCEIRA"&&(collapsed||groupsOpen.includes(g.title))&&<div className="mg-side-company-select">{units.map(u=><button type="button" key={u.slug} className={"mg-side-company "+(operationUnit===u.slug?"active":"")} title={u.name} onClick={()=>{setOperationUnit(u.slug);setView("caixa");setActionMessage("");setMobile(false)}}><span className={"mg-company-dot "+u.slug}/><span>{u.name}</span></button>)}</div>}{(collapsed||groupsOpen.includes(g.title))&&g.items.map(n=><button key={n.id} type="button" title={n.label} className={"mg-nav "+(view===n.id?"active":"")} onClick={()=>{setView(n.id);setMobile(false);setActionMessage("")}}><n.icon size={19}/><span>{n.label}</span></button>)}</div>)}</nav><div className="mg-sidebar-footer"><span>● <span>Sistema de gestão</span></span><small>Criado e mantido pela<br/><strong>MW TECH SISTEMAS</strong></small></div></aside>
  <main className="mg-main"><header className="mg-topbar"><button className="mg-hamburger" onClick={()=>setMobile(true)} aria-label="Abrir menu"><Menu/></button><button className="mg-desktop-toggle" aria-label={collapsed?"Expandir menu lateral":"Recolher menu lateral"} title={collapsed?"Expandir menu":"Recolher menu"} onClick={()=>setCollapsed(v=>!v)}>{collapsed?<PanelLeftOpen size={21}/>:<PanelLeftClose size={21}/>}</button><div className="mg-page-name"><small>PAINEL ADMINISTRATIVO</small><strong>{view==="perfil"?"Meu perfil":nav.find(n=>n.id===view)?.label}</strong></div><div className="mg-top-filters"><label>Estabelecimento<select value={unit} onChange={e=>setUnit(e.target.value as Unit)}><option value="todos">Todos os estabelecimentos</option>{units.map(u=><option key={u.slug} value={u.slug}>{u.name}</option>)}</select></label><label>Período<select value={period} onChange={e=>setPeriod(e.target.value)}><option value="7">Últimos 7 dias</option><option value="30">Últimos 30 dias</option><option value="mes">Este mês</option><option value="ano">Este ano</option></select></label><button type="button" className="mg-theme-toggle" onClick={()=>setDark(v=>!v)} title={dark?"Ativar modo claro":"Ativar modo escuro"} aria-label={dark?"Modo claro":"Modo escuro"}>{dark?<Sun size={19}/>:<Moon size={19}/>}</button><div className="mg-profile-wrapper"><button type="button" className="mg-profile-trigger" onClick={()=>setProfileOpen(v=>!v)} aria-expanded={profileOpen}><span className="mg-avatar">{photoUrl?<img src={photoUrl} alt="Foto do gerente"/>:"VG"}</span><span className="mg-profile-trigger-name"><strong>{profileName||profileEmail.split("@")[0]||"Meu perfil"}</strong><small>{currentRole}</small></span><ChevronDown size={15}/></button>{profileOpen&&<div className="mg-profile-popover"><strong>Minha conta</strong><small>{profileEmail}</small><button onClick={()=>{setView("perfil");setProfileOpen(false)}}><UserRound size={16}/> Editar perfil e senha</button><button onClick={onSignOut}><LogOut size={16}/> Sair do sistema</button></div>}</div></div></header>
  <div className="mg-content">
  {error&&<div className="mg-warning"><AlertTriangle size={17}/>{error}</div>}
