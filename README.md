@@ -57,3 +57,12 @@ A aplicação apresenta o painel inicial e o portal de atendimento. Para persist
 - `npm run dev` usa `predev` para disponibilizar os mesmos PNGs no desenvolvimento.
 - As logomarcas são aplicadas a banners do painel, relatórios, atendimento do cliente e cartões do gerente.
 - Se a Vercel não atualizar automaticamente, execute um redeploy usando o commit mais recente no repositório. **Build de produção não foi verificado nesta sessão.**
+
+## Cadastro de usuários com CPF — 16/11/2026
+- **Administradores** podem cadastrar colaboradores diretamente em **Usuários e Gerentes**: nome, CPF, senha inicial (mínimo 10 caracteres), perfil, uma ou duas unidades e módulos liberados. Não há convite por e-mail.
+- O login aceita CPF (com ou sem pontos/hífen) ou e-mail das contas anteriores. CPF é convertido no cliente para o identificador interno `<11 dígitos>@login.mwgestaocomercial.com.br`. A senha nunca deve ser armazenada fora do Supabase Auth; não se recomenda usar o próprio CPF como senha.
+- Edge Function `gerenciar-usuarios-comerciais` autenticada com JWT e Service Role **somente no servidor**: listagem, criação, edição de permissões e redefinição de senha. A função verifica perfil administrador na(s) unidade(s) antes de agir.
+- Dados de identificação dos novos usuários: `usuarios_comerciais` (somente servidor). Permissões por módulo/unidade: `usuarios_modulos` (RLS); vínculo de papel/unidade: `usuarios_estabelecimentos` (RLS).
+- Leitura, escrita financeira e resposta a opiniões passam a verificar as permissões correspondentes no banco; perfil `consulta` não pode gravar. Administradores mantêm acesso integral nas próprias unidades.
+- Contas antigas por e-mail continuam válidas. Redefinição de senha para login CPF é feita pelo administrador em campo mascarado. O formulário não exibe nem recupera senhas existentes.
+- **Teste pendente:** confirmar a compilação e fazer um cadastro de teste na Vercel publicada. Nenhuma conta com CPF foi criada durante esta implementação.
