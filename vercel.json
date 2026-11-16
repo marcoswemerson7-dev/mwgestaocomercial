@@ -1,0 +1,12 @@
+{
+  "rewrites": [
+    {
+      "source": "/atendimento/:slug",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/((?!assets/|.*\\..*).*)",
+      "destination": "/index.html"
+    }
+  ]
+}
