@@ -845,3 +845,83 @@
 .mg-users-filter-row>span{font-size:11px;color:var(--mg-muted);font-weight:650;white-space:nowrap}
 .mg-user-role-pill{display:inline-block;padding:6px 11px;border-radius:50px;background:#d9f6e9;color:#05764b;font-size:11px;font-weight:800;text-transform:capitalize}
 .mg-dark .mg-user-role-pill{background:#185242;color:#9ef0c4}
+
+
+/* Correção final da navegação recolhida: desktop só com ícones, sem overflow */
+@media screen and (min-width:901px) {
+ .mg-shell .mg-sidebar.mg-collapsed {
+  flex:0 0 78px!important;width:78px!important;min-width:78px!important;max-width:78px!important;
+  padding:18px 8px!important;overflow-x:hidden!important;overflow-y:hidden!important;
+ }
+ .mg-shell .mg-sidebar.mg-collapsed .mg-brand {
+  width:100%!important;min-width:0!important;justify-content:center!important;padding:0!important;gap:0!important;
+ }
+ .mg-shell .mg-sidebar.mg-collapsed .mg-brand>img{width:48px!important;height:48px!important;flex-shrink:0!important}
+ .mg-shell .mg-sidebar.mg-collapsed .mg-brand-name,
+ .mg-shell .mg-sidebar.mg-collapsed .mg-manager-pill span,
+ .mg-shell .mg-sidebar.mg-collapsed .mg-group-toggle,
+ .mg-shell .mg-sidebar.mg-collapsed .mg-nav span,
+ .mg-shell .mg-sidebar.mg-collapsed .mg-side-company-select,
+ .mg-shell .mg-sidebar.mg-collapsed .mg-sidebar-footer small,
+ .mg-shell .mg-sidebar.mg-collapsed .mg-sidebar-footer span span{
+  display:none!important;
+ }
+ .mg-shell .mg-sidebar.mg-collapsed .mg-manager-pill{
+  display:grid!important;place-items:center!important;width:42px!important;min-width:42px!important;
+  max-width:42px!important;height:42px!important;padding:0!important;margin:20px auto!important;
+  overflow:hidden!important;font-size:18px!important;white-space:nowrap!important;
+ }
+ .mg-shell .mg-sidebar.mg-collapsed nav{
+  display:flex!important;flex-direction:column!important;gap:6px!important;align-items:stretch!important;
+  width:100%!important;min-width:0!important;overflow-y:auto!important;overflow-x:hidden!important;
+  scrollbar-width:none!important;overscroll-behavior:contain;
+ }
+ .mg-shell .mg-sidebar.mg-collapsed nav::-webkit-scrollbar{display:none!important}
+ .mg-shell .mg-sidebar.mg-collapsed .mg-nav-group{
+  display:flex!important;flex-direction:column!important;gap:6px!important;
+  width:100%!important;min-width:0!important;max-width:100%!important;margin:0!important;padding:0!important;
+ }
+ .mg-shell .mg-sidebar.mg-collapsed .mg-nav {
+  display:flex!important;align-items:center!important;justify-content:center!important;
+  width:100%!important;max-width:100%!important;min-width:0!important;
+  height:46px!important;min-height:46px!important;padding:10px!important;margin:0!important;
+  transform:none!important;overflow:hidden!important;border-radius:11px!important;
+ }
+ .mg-shell .mg-sidebar.mg-collapsed .mg-nav svg{
+  display:block!important;flex-shrink:0!important;width:20px!important;height:20px!important;
+ }
+ .mg-shell .mg-sidebar.mg-collapsed .mg-sidebar-footer{
+  display:flex!important;align-items:center!important;justify-content:center!important;
+  min-width:0!important;width:100%!important;margin-top:auto!important;padding:13px 0 4px!important;
+  overflow:hidden!important;
+ }
+ .mg-shell .mg-sidebar.mg-collapsed .mg-sidebar-footer>span{font-size:0!important}
+ .mg-shell .mg-sidebar.mg-collapsed .mg-sidebar-footer>span::first-letter{font-size:14px!important}
+}
+/* Em telas pequenas, recolher significa esconder o painel até o botão Menu abrir */
+@media screen and (max-width:900px) {
+ .mg-shell .mg-sidebar,
+ .mg-shell .mg-sidebar.mg-collapsed{
+  position:fixed!important;top:0!important;bottom:0!important;left:0!important;z-index:60!important;
+  width:265px!important;min-width:265px!important;max-width:265px!important;height:100dvh!important;
+  padding:20px 13px!important;overflow-x:hidden!important;overflow-y:auto!important;
+  transform:translateX(-105%)!important;transition:transform .22s ease!important;
+ }
+ .mg-shell .mg-sidebar.mg-show,
+ .mg-shell .mg-sidebar.mg-show.mg-collapsed{transform:translateX(0)!important}
+ .mg-shell .mg-sidebar.mg-collapsed .mg-brand-name,
+ .mg-shell .mg-sidebar.mg-collapsed .mg-manager-pill span,
+ .mg-shell .mg-sidebar.mg-collapsed .mg-group-toggle,
+ .mg-shell .mg-sidebar.mg-collapsed .mg-group-toggle span,
+ .mg-shell .mg-sidebar.mg-collapsed .mg-group-toggle svg,
+ .mg-shell .mg-sidebar.mg-collapsed .mg-nav span,
+ .mg-shell .mg-sidebar.mg-collapsed .mg-side-company-select,
+ .mg-shell .mg-sidebar.mg-collapsed .mg-sidebar-footer small,
+ .mg-shell .mg-sidebar.mg-collapsed .mg-sidebar-footer span span{display:revert!important}
+ .mg-shell .mg-sidebar.mg-collapsed nav{display:grid!important;overflow-x:hidden!important;overflow-y:auto!important}
+ .mg-shell .mg-sidebar.mg-collapsed .mg-nav-group{display:grid!important;margin:10px 0 18px!important}
+ .mg-shell .mg-sidebar.mg-collapsed .mg-nav{justify-content:flex-start!important;width:100%!important;padding:10px 13px!important;height:auto!important}
+ .mg-shell .mg-sidebar.mg-collapsed .mg-side-company-select{display:grid!important}
+ .mg-shell .mg-sidebar.mg-collapsed .mg-manager-pill{width:auto!important;min-width:0!important;padding:9px 12px!important}
+ .mg-shell .mg-sidebar.mg-collapsed .mg-sidebar-footer{display:grid!important;text-align:left!important}
+}
