@@ -50,3 +50,81 @@
 .mg-closing-preview span{display:flex;gap:9px;align-items:center}
 @media(max-width:680px){.mg-form-grid{grid-template-columns:1fr}.mg-finance-form{padding:14px}}
 @media print{.mg-sidebar,.mg-topbar,.mg-report-actions,.mg-finance-form,.mg-form-grid,.mg-btn{display:none!important}}
+
+
+/* Aperfeiçoamento institucional dos banners e relatório financeiro */
+.mg-banners{gap:14px;margin-bottom:19px}
+.mg-banners .mg-unit{min-height:138px;background-position:center;box-shadow:0 8px 22px #0e315017;border:1px solid #ffffff38;overflow:hidden}
+.mg-banners .mg-supermercado{background:linear-gradient(120deg,#063fbe 0%,#0d2777 84%,#073190 100%)}
+.mg-banners .mg-acai{background:linear-gradient(120deg,#66136f,#881c89 68%,#60176f)}
+.mg-banners .mg-unit:after{bottom:-58px;height:75px;border-top:4px solid #ffcf61;background:linear-gradient(90deg,#eebc4133,#e7b33813)}
+.mg-banners .mg-logo-typography{flex:1.15;max-width:55%;padding-right:8px}
+.mg-banners .mg-brand-image{height:105px;max-height:108px;object-position:center;filter:drop-shadow(0 4px 5px #00194424)}
+.mg-banners .mg-unit-info{flex:1;max-width:48%;gap:8px}
+.mg-banners .mg-unit-info strong{font-size:15px;letter-spacing:.15px}
+.mg-banners .mg-unit-info span{font-size:10px;line-height:1.55}
+.mg-report-sheet{max-width:1190px!important;background:#fff!important;color:#193443!important;box-shadow:0 8px 30px #143d4a0b}
+.mg-report-head{display:grid;grid-template-columns:minmax(0,1fr) minmax(250px,.88fr);align-items:center;gap:24px;padding:4px 0 22px;margin-bottom:20px;border-bottom:2px solid #07866d}
+.mg-report-brands{width:100%;max-width:none;display:flex;gap:12px;align-items:stretch}
+.mg-report-brands .mg-mini-brand{width:100%;height:114px;border-radius:12px;display:flex;justify-content:center;align-items:center;padding:9px 14px;box-shadow:inset 0 0 0 1px #ffffff25}
+.mg-report-brands .mg-mini-brand.supermercado{background:linear-gradient(115deg,#064ad2,#09216f)}
+.mg-report-brands .mg-mini-brand.acai{background:linear-gradient(115deg,#702081,#7f1782)}
+.mg-report-brands .mg-brand-image{height:93px;max-width:100%;object-fit:contain}
+.mg-report-company{padding-left:24px;border-left:1px solid #bdcbd2;gap:6px}
+.mg-report-company-label{color:#02816b!important;font-size:9px!important;font-weight:900;letter-spacing:1.1px}
+.mg-report-company strong{font-size:13px;color:#142f40;line-height:1.35}
+.mg-report-company span{font-size:11px;color:#546e7b;line-height:1.55}
+.mg-report-title{text-align:center;margin:18px 0}
+.mg-report-title>span{color:#087965;font-size:9px;font-weight:850;letter-spacing:1.7px}
+.mg-report-title h2{font-size:18px;margin:10px 0;line-height:1.45;color:#153244}
+.mg-report-metadata{display:grid;grid-template-columns:1.5fr 1.2fr .7fr .7fr;gap:10px;border:1px solid #dce6e9;border-radius:9px;padding:13px 15px;margin-bottom:20px;background:#f7fafb}
+.mg-report-metadata>div{display:grid;gap:5px;border-right:1px solid #e0e7ea;padding-right:8px}
+.mg-report-metadata>div:last-child{border-right:0}
+.mg-report-metadata small{font-size:9px;text-transform:uppercase;letter-spacing:.5px;color:#708596}
+.mg-report-metadata strong{font-size:11px;color:#193949;line-height:1.35}
+.mg-report-sheet .mg-kpis{gap:11px;margin-bottom:20px}
+.mg-report-sheet .mg-metric{padding:15px;border:1px solid #dae5e7;border-radius:12px}
+.mg-report-sheet .mg-metric strong{font-size:20px}
+.mg-report-section{margin:20px 0 23px}
+.mg-report-section h3{font-size:13px;color:#183f4e;border-left:3px solid #0a9c7e;padding-left:10px;margin:0 0 14px}
+.mg-report-unit-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.mg-report-unit-block{display:grid;grid-template-columns:1fr auto;gap:10px;padding:14px 17px;border-radius:10px;border:1px solid #dce6e8;background:#f8fbfb}
+.mg-report-unit-block>strong{grid-column:1/-1;border-bottom:1px solid #e4ebed;padding-bottom:8px;color:#143846}
+.mg-report-unit-block span{grid-column:1/-1;display:flex;justify-content:space-between;color:#627b86;font-size:11px}
+.mg-report-unit-block b{color:#133746}
+.mg-report-sheet .mg-table-wrap{border:1px solid #e0e8eb;border-radius:8px}
+.mg-report-sheet .mg-table-wrap th{background:#edf3f5;font-size:10px;color:#4e6474;font-weight:850}
+.mg-report-sheet .mg-table-wrap td{color:#445e6a;border-bottom:1px solid #e8eef0}
+.mg-report-totals{padding:17px 12px;border-top:2px solid #0a917b;background:#f0f9f5;border-radius:0 0 9px 9px;align-items:center}
+.mg-report-totals strong{color:#0c644f}
+.mg-report-totals span{font-size:11px}
+.mg-report-sheet footer{display:flex;align-items:center;justify-content:space-between;margin-top:23px;padding-top:14px;border-top:1px solid #cbdcdd;font-size:9px;color:#71858d}
+@media(max-width:1050px){.mg-report-head{grid-template-columns:1fr}.mg-report-company{border-left:0;border-top:1px solid #c8d9db;padding:14px 0 0}.mg-report-metadata{grid-template-columns:repeat(2,minmax(0,1fr))}.mg-report-metadata>div:nth-child(2){border-right:0}.mg-banners .mg-unit-info span:last-child{display:none}}
+@media(max-width:660px){.mg-banners .mg-unit{min-height:115px}.mg-banners .mg-brand-image{height:80px}.mg-banners .mg-unit-info strong{font-size:12px}.mg-report-brands .mg-mini-brand{height:83px;padding:6px}.mg-report-brands .mg-brand-image{height:70px}.mg-report-unit-grid{grid-template-columns:1fr}.mg-report-metadata{grid-template-columns:1fr 1fr;padding:11px}.mg-report-metadata strong{font-size:10px}.mg-report-title h2{font-size:15px}.mg-report-sheet .mg-metric strong{font-size:16px}}
+@media print{
+ @page{size:A4 portrait;margin:13mm 12mm}
+ .mg-report-sheet{max-width:none!important;margin:0!important;padding:0!important;box-shadow:none!important;border:0!important;color:#111!important}
+ .mg-report-head{display:grid!important;grid-template-columns:1fr 1fr!important;gap:12px!important;border-bottom:1px solid #789!important}
+ .mg-report-brands .mg-mini-brand{height:66px!important;padding:3px 7px!important;print-color-adjust:exact;-webkit-print-color-adjust:exact}
+ .mg-report-brands .mg-brand-image{height:58px!important}
+ .mg-report-company{border:0!important;border-left:1px solid #ccc!important;padding:0 0 0 12px!important}
+ .mg-report-company strong{font-size:10px!important}.mg-report-company span{font-size:8px!important}
+ .mg-report-title{margin:10px 0!important}.mg-report-title h2{font-size:13px!important}
+ .mg-report-metadata{grid-template-columns:1.5fr 1.2fr .6fr .7fr!important;padding:8px!important;gap:7px!important;margin-bottom:11px!important;background:#fff!important;print-color-adjust:exact}
+ .mg-report-metadata small{font-size:8px}.mg-report-metadata strong{font-size:9px}
+ .mg-report-sheet .mg-kpis{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:7px!important;margin-bottom:12px!important}
+ .mg-report-sheet .mg-metric{padding:8px!important;border-radius:5px!important;break-inside:avoid}
+ .mg-report-sheet .mg-metric-icon{display:none!important}.mg-report-sheet .mg-metric strong{font-size:13px!important}
+ .mg-report-section{margin:10px 0!important;break-inside:auto}.mg-report-section h3{font-size:11px!important;margin-bottom:7px!important;break-after:avoid}
+ .mg-report-unit-grid{grid-template-columns:1fr 1fr!important;gap:6px!important}
+ .mg-report-unit-block{padding:7px!important;font-size:9px!important;break-inside:avoid}
+ .mg-report-unit-block span{font-size:8px!important}
+ .mg-report-sheet .mg-table-wrap{overflow:visible!important}
+ .mg-report-sheet .mg-table-wrap table{width:100%!important;table-layout:auto;white-space:normal!important}
+ .mg-report-sheet .mg-table-wrap th,.mg-report-sheet .mg-table-wrap td{font-size:8px!important;padding:6px 4px!important}
+ .mg-report-sheet .mg-table-wrap thead{display:table-header-group}
+ .mg-report-sheet .mg-table-wrap tr{break-inside:avoid}
+ .mg-report-totals{font-size:9px!important;padding:9px!important;break-inside:avoid}
+ .mg-report-totals span{font-size:9px!important}
+ .mg-report-sheet footer{font-size:8px!important}
+}
