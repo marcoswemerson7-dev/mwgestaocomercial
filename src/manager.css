@@ -685,8 +685,8 @@
 @media(max-width:650px){.mg-plate-overlay{padding:10px}.mg-plate-dialog{padding:12px}.mg-plate-toolbar-actions{width:100%}.mg-print-plate{min-height:630px}.mg-plate-heading{min-height:150px}.mg-plate-logo{height:90px}.mg-plate-logo .mg-brand-image{height:90px!important;max-height:90px!important}.mg-plate-body{padding:18px 12px}.mg-plate-body h2{font-size:23px}.mg-plate-qr svg{width:200px;height:200px}}
 @media print{
  @page{size:A4 portrait;margin:0}
- html,body,#root{width:210mm!important;min-height:297mm!important;background:#fff!important}
- body *{visibility:hidden!important}
+ body:has(.mg-plate-overlay),body:has(.mg-plate-overlay) #root{width:210mm!important;min-height:297mm!important;background:#fff!important}
+ body:has(.mg-plate-overlay) *{visibility:hidden!important}
  .mg-plate-overlay,.mg-plate-overlay *{visibility:visible!important}
  .mg-plate-overlay{position:absolute!important;top:0!important;left:0!important;right:auto!important;bottom:auto!important;width:210mm!important;height:297mm!important;max-height:none!important;padding:0!important;margin:0!important;background:white!important;overflow:visible!important;display:block!important}
  .mg-plate-dialog{width:210mm!important;height:297mm!important;max-width:none!important;padding:0!important;margin:0!important;border:0!important;border-radius:0!important;box-shadow:none!important;background:#fff!important}
@@ -711,3 +711,46 @@
 .mg-dark .mg-report-actions .mg-reset-filters:hover{background:#25453e;color:#b9edd8}
 @media(max-width:600px){.mg-report-actions{flex-wrap:wrap}.mg-report-actions .mg-reset-filters{flex:1 1 100%}}
 @media print{.mg-report-actions .mg-reset-filters{display:none!important}}
+
+
+/* CORREÇÃO PDF: a impressão do QR Code não pode ocultar o relatório financeiro */
+@media print {
+  @page { size: A4 portrait; margin: 11mm; }
+  html, body, #root { height: auto !important; min-height: 0 !important; overflow: visible !important; }
+  body:not(:has(.mg-plate-overlay)) *,
+  body:not(:has(.mg-plate-overlay)) *::before,
+  body:not(:has(.mg-plate-overlay)) *::after { visibility: visible !important; }
+  body:not(:has(.mg-plate-overlay)) .mg-shell,
+  body:not(:has(.mg-plate-overlay)) .mg-main,
+  body:not(:has(.mg-plate-overlay)) .mg-content {
+    display: block !important; width: auto !important; min-width: 0 !important;
+    height: auto !important; min-height: 0 !important; max-height: none !important;
+    overflow: visible !important; position: static !important;
+    background: #fff !important; padding: 0 !important; margin: 0 !important;
+  }
+  body:not(:has(.mg-plate-overlay)) .mg-sidebar,
+  body:not(:has(.mg-plate-overlay)) .mg-topbar,
+  body:not(:has(.mg-plate-overlay)) .mg-heading,
+  body:not(:has(.mg-plate-overlay)) .mg-report-actions,
+  body:not(:has(.mg-plate-overlay)) .mg-report-filter-bar,
+  body:not(:has(.mg-plate-overlay)) .mg-profile-popover { display: none !important; }
+  body:not(:has(.mg-plate-overlay)) .mg-report-premium {
+    display: block !important; visibility: visible !important;
+    width: 100% !important; max-width: none !important;
+    height: auto !important; min-height: 0 !important;
+    overflow: visible !important; position: static !important;
+    margin: 0 !important; padding: 0 !important; box-shadow: none !important;
+    border: 0 !important; border-radius: 0 !important;
+    color: #102638 !important; background: #fff !important;
+  }
+  body:not(:has(.mg-plate-overlay)) .mg-report-premium * { visibility: visible !important; }
+  body:not(:has(.mg-plate-overlay)) .mg-report-premium .mg-table-wrap { overflow: visible !important; }
+  body:not(:has(.mg-plate-overlay)) .mg-report-premium thead { display: table-header-group !important; }
+  body:not(:has(.mg-plate-overlay)) .mg-report-premium tr,
+  body:not(:has(.mg-plate-overlay)) .mg-report-premium .mg-metric { break-inside: avoid; }
+  body:not(:has(.mg-plate-overlay)) .mg-report-premium .mg-mini-brand,
+  body:not(:has(.mg-plate-overlay)) .mg-report-premium .mg-report-totals,
+  body:not(:has(.mg-plate-overlay)) .mg-report-premium .mg-table-wrap th {
+    print-color-adjust: exact !important; -webkit-print-color-adjust: exact !important;
+  }
+}
