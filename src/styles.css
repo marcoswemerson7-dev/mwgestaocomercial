@@ -100,3 +100,14 @@ body,.main{background:var(--bg);color:var(--ink)}.sidebar{background:var(--sideb
 .report-company-emblem{background:#e5f6f1;color:#0b8b76;border-radius:14px;width:55px;height:55px;display:grid;place-items:center}
 .report-vendor{text-align:center;margin-top:30px;padding-top:15px;border-top:1px solid var(--line);font-size:10px;color:var(--muted)}
 @media print{.qr-grid{display:grid;grid-template-columns:repeat(2,1fr)}.qr-panel{break-inside:avoid}.qr-panel .primary,.qr-panel .secondary{display:none!important}.qr-image{border:0}.report-company-emblem{border:1px solid #ccc}.report-vendor{font-size:9px}}
+
+/* Identidade do atendimento público */
+.public-header{gap:13px;max-width:800px;margin-left:auto;margin-right:auto}
+.public-header-logo{display:block;width:120px;height:57px;object-fit:contain;background:#5d1677;border-radius:10px;padding:6px}
+.public-bg:has(.public-brand-supermercado) .public-header-logo{background:#0535b5}
+.public-brand-hero{display:flex;justify-content:center;align-items:center;margin:0 auto 18px;border-radius:17px;width:min(100%,410px);min-height:140px;padding:17px 22px;background:linear-gradient(135deg,#6b1684,#942b9d)}
+.public-brand-hero.public-brand-supermercado{background:linear-gradient(135deg,#053dd9,#071d77)}
+.public-brand-hero img{display:block;max-width:100%;width:100%;max-height:110px;object-fit:contain;filter:drop-shadow(0 4px 5px #0002)}
+.public-header strong{font-size:15px}
+.public-card .public-intro{padding-top:0}
+@media(max-width:560px){.public-header-logo{width:82px;height:42px}.public-brand-hero{min-height:110px;padding:15px}.public-brand-hero img{max-height:80px}}
