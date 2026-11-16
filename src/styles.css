@@ -29,3 +29,17 @@ body,.main{background:var(--bg);color:var(--ink)}.sidebar{background:var(--sideb
 [data-theme="dark"] .category.selected{background:#244e47;border-color:#2ba890}
 [data-theme="dark"] .notice{background:#3e3723;border-color:#6b5c35;color:#f1d59c}
 @media print{body,.main,.content{background:#fff!important;color:#111!important}.report-print{border:0!important}.report-heading{border-color:#555!important}.report-print *{color:#111!important}}
+
+/* Login institucional aguardando ativação do projeto Supabase */
+.login-modern{max-width:430px;gap:16px;padding:42px 39px}
+.login-modern .brand-symbol{height:53px;width:53px;font-size:20px}
+.login-modern .login-kicker{text-align:center;font-size:9px;letter-spacing:1.5px;font-weight:800;color:#18927d}
+.login-modern h1{font-size:29px;line-height:1.2;letter-spacing:-.7px}
+.login-modern p{font-size:12px}
+.login-separator{height:1px;background:var(--line);margin:4px 0}
+.login-modern input:disabled{background:var(--bg);opacity:.65;cursor:not-allowed}
+.login-modern button:disabled{opacity:.6}
+.setup-message{display:flex;align-items:flex-start;gap:9px;padding:13px;background:#edf7f3;border:1px solid #d0e8dd;border-radius:10px;color:#356f5e;font-size:11px;line-height:1.6}
+.setup-message svg{flex-shrink:0}
+[data-theme="dark"] .setup-message{background:#1b3934;border-color:#355a51;color:#b0e2d1}
+@media(max-width:500px){.login-modern{padding:30px 24px}}
