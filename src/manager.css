@@ -343,3 +343,153 @@
 @media print{
  .mg-report-brands .mg-mini-brand .mg-brand-image{max-height:75px!important}
 }
+
+
+/* MW Gestão Comercial | Identidade gerencial viva — 2026 */
+.mg-shell{
+ --mg-bg:#f2f7f9;--mg-card:#ffffff;--mg-text:#102638;--mg-muted:#637d8e;
+ --mg-stroke:#d9e5eb;--mg-green:#009a67;--mg-chart-axis:#758b9b;
+ --mg-chart-grid:#dfebee;
+ background:var(--mg-bg);color:var(--mg-text);
+}
+.mg-shell:not(.mg-dark) .mg-sidebar{
+ background:linear-gradient(165deg,#003c3b 0%,#005647 53%,#004136 100%);
+ box-shadow:5px 0 24px #002e2921;
+ border-right:1px solid #ffffff12;
+}
+.mg-shell:not(.mg-dark) .mg-topbar{
+ background:linear-gradient(105deg,#ffffff 0%,#f6fcfc 100%);
+ box-shadow:0 3px 14px #1144540b;
+}
+.mg-sidebar .mg-brand>img{width:54px;height:54px;filter:drop-shadow(0 4px 8px #0004)}
+.mg-brand-name strong{font-size:15px;letter-spacing:-.3px}
+.mg-manager-pill{background:linear-gradient(120deg,#084c3e,#033e36);border:1px solid #e2c44b;box-shadow:0 4px 15px #002d2970;color:#f5d963}
+.mg-sidebar .mg-menu-title{color:#b9d9d5;font-weight:850;letter-spacing:1.05px}
+.mg-sidebar .mg-nav{border:1px solid transparent;border-radius:10px;transition:background .18s ease,transform .18s ease,color .18s ease}
+.mg-sidebar .mg-nav:hover{background:#ffffff19;transform:translateX(2px)}
+.mg-sidebar .mg-nav.active{background:linear-gradient(110deg,#00b870,#02d16c);color:#fff;box-shadow:0 5px 16px #003b2c66,inset 3px 0 #fff6;border-color:#ffffff28}
+.mg-sidebar .mg-nav.active svg{filter:drop-shadow(0 2px 3px #002b2244)}
+.mg-sidebar .mg-side-company.active{background:#ffffff25;border-color:#61d7b2}
+.mg-sidebar .mg-sidebar-footer{border-top:1px solid #9be2cb38}
+.mg-shell .mg-content{max-width:1720px}
+.mg-shell .mg-dashboard-intro{margin-bottom:18px}
+.mg-dashboard-intro h1{font-size:clamp(25px,2.1vw,34px);font-weight:850;letter-spacing:-1px}
+.mg-dashboard-intro .mg-eyebrow{color:#059b65;font-weight:900}
+.mg-dashboard-intro p{color:var(--mg-muted);font-size:13px}
+.mg-dashboard-controls .mg-btn.primary,.mg-shell .mg-btn.primary{
+ background:linear-gradient(115deg,#009268,#00c86b);color:white;
+ border:1px solid #00a66c;box-shadow:0 5px 13px #00a36b25;
+ transition:transform .16s ease,box-shadow .16s ease,filter .16s ease;
+}
+.mg-dashboard-controls .mg-btn.primary:hover,.mg-shell .mg-btn.primary:hover{
+ transform:translateY(-2px);box-shadow:0 8px 20px #00a66c33;filter:brightness(1.035)
+}
+.mg-dashboard-banners{gap:16px}
+.mg-dashboard-banners .mg-unit{
+ border-radius:18px;min-height:132px;box-shadow:0 8px 18px #081b351b;
+ isolation:isolate;overflow:hidden;
+}
+.mg-dashboard-banners .mg-supermercado{background:linear-gradient(111deg,#064bea,#09279a 62%,#071d70)}
+.mg-dashboard-banners .mg-acai{background:linear-gradient(110deg,#6c087d,#92229d 72%,#6c0a83)}
+.mg-dashboard-banners .mg-unit:after{border-top:6px solid #f4cb2c;bottom:-67px;opacity:.96;pointer-events:none}
+.mg-dashboard-banners .mg-brand-image{filter:drop-shadow(0 5px 8px #0004)}
+.mg-dashboard-banners .mg-unit-info strong{font-size:15px;color:#fff}
+.mg-dashboard-banners .mg-unit-info span{color:#f4f9ff;font-size:11px}
+.mg-dashboard-kpis{grid-template-columns:repeat(5,minmax(0,1fr));gap:13px}
+.mg-dashboard-kpis .mg-metric{
+ min-width:0;min-height:108px;display:flex;flex-direction:row;align-items:flex-start;
+ background:linear-gradient(155deg,#fff,#fcffff);padding:17px 15px;
+ border:1px solid #d7e4ea;border-radius:16px;box-shadow:0 6px 15px #0a34400e;
+ transition:transform .2s ease,box-shadow .2s ease;
+}
+.mg-dashboard-kpis .mg-metric:hover{transform:translateY(-3px);box-shadow:0 12px 23px #0a34401a}
+.mg-dashboard-kpis .mg-metric:first-child{border-left:3px solid #00bd70}
+.mg-dashboard-kpis .mg-metric strong{font-size:clamp(16px,1.55vw,24px);letter-spacing:-.7px}
+.mg-dashboard-kpis .mg-metric-icon{width:47px;height:47px;min-width:47px;border-radius:13px;background:linear-gradient(150deg,#d3ffdc,#a6f6cb);color:#078c54}
+.mg-dashboard-kpis .mg-metric-red .mg-metric-icon{background:linear-gradient(135deg,#fff1f0,#ffd8d6);color:#ed3852}
+.mg-dashboard-kpis .mg-metric-gold .mg-metric-icon{background:linear-gradient(135deg,#d2ffe3,#a3efc0);color:#078e57}
+.mg-dashboard-kpis .mg-metric-purple .mg-metric-icon{background:linear-gradient(135deg,#f1e7ff,#dec5ff);color:#8833bf}
+.mg-dashboard-kpis .mg-metric-blue .mg-metric-icon{background:linear-gradient(135deg,#e1f3ff,#c8e6ff);color:#0875c4}
+.mg-dashboard-kpis .mg-metric small{font-size:10px;color:#7c91a1;line-height:1.45}
+.mg-dashboard-charts{grid-template-columns:minmax(0,1.55fr) minmax(340px,1fr);gap:16px}
+.mg-dashboard-charts .mg-card,.mg-dashboard-bottom .mg-card{
+ border-radius:18px;border:1px solid #d7e3e9;
+ background:linear-gradient(150deg,#fff 0%,#fefefe 100%);
+ box-shadow:0 5px 13px #0d364512;
+}
+.mg-chart-card .mg-card-heading h3,.mg-dashboard-bottom .mg-card-heading h3{font-size:18px;font-weight:850;letter-spacing:-.4px}
+.mg-card-kicker{color:#059c66;font-weight:900;letter-spacing:.75px}
+.mg-chart-card .mg-graph-chip{background:#d9fdec;border-radius:10px;padding:10px;color:#008c59}
+.mg-chart-card .mg-chart{height:270px}
+.mg-donut-chart{filter:drop-shadow(0 5px 6px #0c66341c)}
+.mg-donut-center strong{font-size:19px;letter-spacing:-.5px}
+.mg-donut-entry .mg-dot{width:13px;height:13px;box-shadow:0 2px 8px #0002}
+.mg-dot.supermercado{background:linear-gradient(150deg,#00da78,#009b58)}
+.mg-dot.acai{background:linear-gradient(150deg,#bd4aff,#8427d3)}
+.mg-dashboard-bottom{grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;align-items:stretch}
+.mg-dashboard-bottom .mg-card{min-width:0}
+.mg-dashboard-bottom .mg-card .mg-card-heading{min-height:61px}
+.mg-recent-list{display:grid;gap:3px}
+.mg-recent-item{border-bottom:1px solid #eaf0f3;padding:12px 0;gap:10px}
+.mg-recent-item:last-child{border-bottom:0}
+.mg-recent-detail{min-width:0}
+.mg-recent-detail strong{font-size:12px;overflow-wrap:anywhere}
+.mg-recent-item>b{white-space:nowrap;font-size:12px}
+.mg-manager-action{border:1px solid #dbe7ed;border-radius:11px;background:#fff;transition:transform .16s,border-color .16s,box-shadow .16s}
+.mg-manager-action:hover{transform:translateX(2px);border-color:#83ccad;box-shadow:0 5px 12px #083a4310}
+.mg-performance-list{display:grid;gap:12px;margin:4px 0 15px}
+.mg-performance-unit{border:1px solid var(--mg-stroke);border-radius:12px;padding:12px;background:var(--mg-bg)}
+.mg-performance-unit-head{display:flex;gap:9px;align-items:center;margin-bottom:11px;font-size:12px}
+.mg-performance-unit>div:not(.mg-performance-unit-head){display:flex;justify-content:space-between;gap:8px;font-size:11px;color:var(--mg-muted);margin-top:7px}
+.mg-performance-unit b{font-size:12px}
+.mg-performance-unit .mg-performance-result{padding-top:9px;margin-top:10px!important;border-top:1px solid var(--mg-stroke)}
+.mg-performance-result strong{color:var(--mg-text);font-size:14px}
+.mg-performance-link{margin-top:auto;width:100%;display:flex;align-items:center;justify-content:space-between}
+.mg-dashboard-bottom .mg-performance-card{display:flex;flex-direction:column}
+.mg-dashboard-bottom .mg-performance-card .mg-performance-link{margin-top:auto}
+.mg-shell:not(.mg-dark) .mg-card:not(.mg-report-sheet):not(.mg-chart-card):hover{border-color:#b9daca}
+.mg-shell .mg-top-filters select{border-radius:11px;font-weight:650}
+.mg-shell .mg-table-wrap th{background:#eaf5f3;color:#456b72}
+.mg-shell .mg-table-wrap tr:hover td{background:#f5fbf9}
+.mg-shell .mg-finance-form input:focus,.mg-shell .mg-finance-form select:focus,.mg-shell .mg-finance-form textarea:focus{outline:2px solid #31c99788;outline-offset:1px}
+.mg-shell.mg-dark{--mg-bg:#0c1e24;--mg-card:#182e35;--mg-text:#eaf9f6;--mg-muted:#a5bbc2;--mg-stroke:#365058;--mg-chart-grid:#365058;--mg-chart-axis:#b3c4ca}
+.mg-dark .mg-sidebar{background:linear-gradient(160deg,#022e31,#00433a 78%,#012b31)}
+.mg-dark .mg-topbar{background:#162b32}
+.mg-dark .mg-dashboard-kpis .mg-metric,.mg-dark .mg-dashboard-charts .mg-card,.mg-dark .mg-dashboard-bottom .mg-card{background:linear-gradient(150deg,#1c323a,#14272e);border-color:#3b535b}
+.mg-dark .mg-performance-unit{background:#172d34}
+.mg-dark .mg-recent-item{border-color:#365058}
+.mg-dark .mg-recent-detail strong,.mg-dark .mg-chart-card .mg-card-heading h3,.mg-dark .mg-dashboard-bottom .mg-card-heading h3{color:var(--mg-text)}
+.mg-dark .mg-manager-action{background:#1d353d;color:#ebf8f6;border-color:#46626a}
+.mg-dark .mg-chart-card .mg-graph-chip{background:#1b5147;color:#88f6b2}
+.mg-dark .mg-dashboard-kpis .mg-metric small{color:#a5bbc2}
+@media(max-width:1500px){
+ .mg-dashboard-kpis .mg-metric{padding:14px 12px;gap:10px}
+ .mg-dashboard-kpis .mg-metric-icon{width:39px;height:39px;min-width:39px}
+ .mg-dashboard-bottom .mg-card{padding:18px}
+}
+@media(max-width:1250px){
+ .mg-dashboard-kpis{grid-template-columns:repeat(3,minmax(0,1fr))}
+ .mg-dashboard-bottom{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .mg-dashboard-bottom .mg-attention-card{grid-column:1/-1}
+}
+@media(max-width:1040px){
+ .mg-dashboard-charts{grid-template-columns:1fr}
+ .mg-dashboard-bottom{grid-template-columns:1fr 1fr}
+}
+@media(max-width:750px){
+ .mg-dashboard-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .mg-dashboard-bottom{grid-template-columns:1fr}
+ .mg-dashboard-bottom .mg-attention-card{grid-column:auto}
+ .mg-dashboard-kpis .mg-metric{padding:13px;min-height:100px}
+ .mg-dashboard-kpis .mg-metric strong{font-size:18px}
+}
+@media(max-width:420px){
+ .mg-dashboard-kpis{grid-template-columns:1fr 1fr;gap:8px}
+ .mg-dashboard-kpis .mg-metric{flex-direction:column}
+ .mg-dashboard-kpis .mg-metric-icon{width:37px;height:37px;min-width:37px}
+ .mg-dashboard-banners .mg-unit{min-height:123px}
+}
+@media print{
+ .mg-dashboard-kpis .mg-metric,.mg-dashboard-charts .mg-card,.mg-dashboard-bottom .mg-card{box-shadow:none!important}
+ .mg-dashboard-bottom{grid-template-columns:1fr 1fr!important}
+}
