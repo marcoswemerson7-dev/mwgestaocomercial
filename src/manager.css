@@ -754,3 +754,35 @@
     print-color-adjust: exact !important; -webkit-print-color-adjust: exact !important;
   }
 }
+
+
+/* Cadastro direto de usuários e gerentes */
+.mg-users-layout{display:grid;grid-template-columns:minmax(0,1fr);gap:18px}
+.mg-users-list,.mg-users-create{max-width:100%;min-width:0}
+.mg-users-form{background:transparent;border:0;padding:0;margin:0;gap:20px}
+.mg-users-form>label{font-size:12px;font-weight:800}
+.mg-user-password{display:flex;align-items:stretch;gap:7px}
+.mg-user-password input{flex:1;min-width:0}
+.mg-user-password button{border:1px solid var(--mg-stroke);border-radius:9px;padding:0 15px;background:var(--mg-card);white-space:nowrap}
+.mg-user-fieldset{min-width:0;margin:0;padding:18px;border:1px solid var(--mg-stroke);border-radius:12px;background:var(--mg-bg)}
+.mg-user-fieldset legend{font-size:13px;font-weight:850;padding:0 8px;color:var(--mg-text)}
+.mg-user-fieldset>p{margin:0 0 14px;font-size:11px;color:var(--mg-muted)}
+.mg-user-checkboxes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.mg-user-check{display:flex;align-items:center;gap:10px;padding:14px;background:var(--mg-card);border:1px solid var(--mg-stroke);border-radius:10px;font-size:12px;cursor:pointer}
+.mg-user-check.selected{border-color:#04b77b;background:linear-gradient(120deg,#ebfff5,#f6fffb);box-shadow:inset 3px 0 #00bf76}
+.mg-user-check input,.mg-user-module input{width:17px;height:17px;flex-shrink:0;accent-color:#029e69;cursor:pointer}
+.mg-user-modules{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
+.mg-user-module{display:flex;gap:9px;align-items:flex-start;padding:13px;border:1px solid var(--mg-stroke);border-radius:10px;background:var(--mg-card);cursor:pointer}
+.mg-user-module span{display:grid;gap:5px;min-width:0}
+.mg-user-module strong{color:var(--mg-text);font-size:12px}
+.mg-user-module small{color:var(--mg-muted);font-size:10px;line-height:1.45}
+.mg-user-form-buttons{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.mg-users-list .mg-table-wrap{min-height:100px}
+.mg-users-list th{white-space:nowrap}
+.mg-users-list td{white-space:normal;vertical-align:middle}
+.mg-users-list td:first-child{min-width:160px}
+.mg-users-list .mg-row-actions{white-space:nowrap}
+.mg-dark .mg-user-check.selected{background:#164439;border-color:#19bb83}
+@media(max-width:1050px){.mg-user-modules{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:620px){.mg-user-checkboxes,.mg-user-modules{grid-template-columns:1fr}.mg-user-password{flex-wrap:wrap}.mg-users-list .mg-table-wrap{overflow-x:auto}.mg-users-list table{min-width:650px}}
+@media print{.mg-users-create,.mg-user-form-buttons{display:none!important}}
