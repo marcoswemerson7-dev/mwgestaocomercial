@@ -1,5 +1,5 @@
 import {useEffect,useMemo,useState} from "react";
-import {Activity,AlertTriangle,ArrowDownLeft,ArrowUpRight,BarChart3,Bell,CalendarDays,ChevronDown,ChevronLeft,ChevronRight,PanelLeftClose,PanelLeftOpen,Moon,Sun,UserRound,Camera,LockKeyhole,Mail,CheckCircle2,Clock3,Download,ExternalLink,FileText,Headphones,LayoutDashboard,LogOut,Menu,MessageCircle,MessageSquare,Printer,Settings,ShieldCheck,Store,TrendingUp,Wallet,Users,Plus,Save,ReceiptText,Pencil,Trash2,RotateCcw,X} from "lucide-react";
+import {Activity,AlertTriangle,ArrowDownLeft,ArrowUpRight,BarChart3,Bell,CalendarDays,ChevronDown,ChevronLeft,ChevronRight,PanelLeftClose,PanelLeftOpen,Moon,Sun,UserRound,Camera,LockKeyhole,Mail,CheckCircle2,Clock3,Download,ExternalLink,FileText,Headphones,LayoutDashboard,LogOut,Menu,MessageCircle,MessageSquare,Printer,Settings,ShieldCheck,Store,TrendingUp,Wallet,Users,Plus,Save,ReceiptText,Pencil,Trash2,RotateCcw,Search,X} from "lucide-react";
 import {Area,AreaChart,CartesianGrid,Cell,Legend,Pie,PieChart,ResponsiveContainer,Tooltip,XAxis,YAxis} from "recharts";
 import {QRCodeSVG} from "qrcode.react";
 import {supabase} from "./lib/supabase";
