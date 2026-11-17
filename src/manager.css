@@ -1220,3 +1220,13 @@
  .mg-shell .mg-system-footer-clock strong{font-size:9px}
  .mg-shell .mg-system-footer-clock time{font-size:13px}
 }
+
+
+/* Opiniões dos Clientes: ações de consulta e exclusão administrativa */
+.mg-ticket-row-actions{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.mg-opinion-delete{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:7px 10px;border-radius:9px;border:1px solid #ffd3d3;background:#fff7f7;color:#bd3030;font-size:11px;font-weight:800;white-space:nowrap;cursor:pointer;transition:background .15s,border-color .15s}
+.mg-opinion-delete:hover:not(:disabled){background:#ffe9e9;border-color:#f1abab}
+.mg-opinion-delete:disabled{opacity:.6;cursor:wait}
+.mg-opinion-delete:focus-visible{outline:2px solid #d95656;outline-offset:2px}
+.mg-dark .mg-opinion-delete{background:#402829;color:#ffc0c0;border-color:#704145}
+.mg-dark .mg-opinion-delete:hover:not(:disabled){background:#573234}
