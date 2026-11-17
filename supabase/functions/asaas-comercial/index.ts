@@ -14,6 +14,8 @@ Deno.serve(async(req:Request)=>{
   const client=createClient(url,anon);
   const {data:{user},error:authError}=await client.auth.getUser(auth.slice(7));
   if(authError||!user)return json({ok:false,message:"Sessão inválida."},401);
+  const ownerIds=(Deno.env.get("ASAAS_ADMIN_USER_IDS")||"").split(",").map(x=>x.trim()).filter(Boolean);
+  if(!ownerIds.includes(user.id))return json({ok:false,message:"Acesso reservado ao responsável pelo faturamento da MW TECH. Configure ASAAS_ADMIN_USER_IDS no Supabase."},403);
   const admin=createClient(url,service,{auth:{persistSession:false,autoRefreshToken:false}});
   const {data:permissions,error:permissionError}=await admin.from("usuarios_estabelecimentos").select("perfil,ativo").eq("usuario_id",user.id).eq("perfil","administrador").eq("ativo",true).limit(1);
   if(permissionError||!permissions?.length)return json({ok:false,message:"Acesso restrito a administradores."},403);
