@@ -316,6 +316,7 @@ function openEditEntry(row:Entry){if(!canManageRow(row)){setActionMessage("Movim
  {actionMessage&&<div className="mg-warning">{actionMessage}</div>}
  {financeError&&<div className="mg-warning">{financeError}</div>}
  {view==="caixa"&&<>{heading("Caixa do Dia","Consulte entradas, saídas e saldos por dia, mês ou período personalizado, sem operação de PDV.")}
+ <div className="mg-banners mg-cash-business-banners" role="group" aria-label="Selecionar estabelecimento para o caixa">{selectableUnits.map(u=><button key={u.slug} type="button" className={"mg-cash-business-button "+(cashUnit===u.slug?"selected":"")} aria-pressed={cashUnit===u.slug} title={"Consultar caixa de "+u.name} onClick={()=>{setCashPage(1);setCashUnit(u.slug);setOperationUnit(u.slug);setDisplayForm(false);setEditingEntry(null)}}><UnitBanner slug={u.slug}/><span className="mg-cash-business-marker"><CheckCircle2 size={15}/> Selecionado</span></button>)}</div>
  <section className="mg-card mg-day-card"><div className="mg-card-heading"><div><h3>Consulta do movimento financeiro</h3><p>Escolha o estabelecimento e o intervalo para acompanhar todas as movimentações.</p></div><CalendarDays size={20}/></div>
  {cashFilterControls}
  {!cashValid&&<div className="mg-warning" role="alert">Informe um período válido: a data inicial deve ser anterior ou igual à data final.</div>}
