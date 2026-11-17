@@ -1,6 +1,6 @@
 import {createClient} from "npm:@supabase/supabase-js@2";
-const allowed=["https://mwgestaocomercial.vercel.app"];
-const headers=(origin:string)=>({"Content-Type":"application/json","Access-Control-Allow-Origin":allowed.includes(origin)?origin:allowed[0],"Vary":"Origin","Access-Control-Allow-Methods":"POST,OPTIONS","Access-Control-Allow-Headers":"content-type,apikey,x-client-info,authorization","Cache-Control":"no-store"});
+const allowed=["https://mwgestaocomercial.vercel.app","https://comercial.mwtechsistemas.com.br","http://localhost:5173"];
+const headers=(origin:string)=>({"Content-Type":"application/json","Access-Control-Max-Age":"86400","Access-Control-Allow-Origin":allowed.includes(origin)?origin:allowed[0],"Vary":"Origin","Access-Control-Allow-Methods":"POST,OPTIONS","Access-Control-Allow-Headers":"content-type,apikey,x-client-info,authorization","Cache-Control":"no-store"});
 Deno.serve(async(req)=>{
  const origin=req.headers.get("Origin")||"";
  if(req.method==="OPTIONS")return new Response(null,{status:204,headers:headers(origin)});
