@@ -177,7 +177,17 @@ export default function ManagerPanel({entries,loading,error,onSignOut}:Props){
    supabase.from("estabelecimentos").select("id,slug,nome").eq("ativo",true),
    supabase.from("usuarios_estabelecimentos").select("usuario_id,estabelecimento_id,perfil,ativo"),
    supabase.from("usuarios_modulos").select("usuario_id,estabelecimento_id,modulo,permitido"),
-   supabase.from("financeiro_lancamentos").select("id,estabelecimento_id,data_lancamento,tipo,categoria,descricao,valor,forma_pagamento,estabelecimentos!inner(slug)").is("cancelado_em",null).order("data_lancamento",{ascending:false}).limit(2000),
+   (async()=>{
+     const rows:any[]=[];const pageSize=1000;let error:null|string=null;let truncated=false;
+     for(let page=0;page<20;page++){
+       const result=await supabase!.from("financeiro_lancamentos").select("id,estabelecimento_id,data_lancamento,tipo,categoria,descricao,valor,forma_pagamento,estabelecimentos!inner(slug)").is("cancelado_em",null).order("data_lancamento",{ascending:false}).order("id",{ascending:false}).range(page*pageSize,(page+1)*pageSize-1);
+       if(result.error){error=result.error.message;break}
+       const batch=result.data||[];rows.push(...batch);
+       if(batch.length<pageSize)break;
+       if(page===19)truncated=true;
+     }
+     return {data:rows,error,truncated};
+   })(),
    supabase.from("financeiro_fechamentos").select("id,estabelecimento_id,data_fechamento,saldo_inicial,saldo_informado,entradas,saidas,saldo_calculado,observacao").order("data_fechamento",{ascending:false}).limit(400)
   ]);
   if(u.data)setUnitsDb(u.data as typeof unitsDb);
@@ -185,8 +195,8 @@ export default function ManagerPanel({entries,loading,error,onSignOut}:Props){
   if(m.data)setModulesGranted(m.data as typeof modulesGranted);
   setPermissionsReady(true);
   if(cl.data)setClosures(cl.data as typeof closures);
-  if(f.error)setFinanceError("Não foi possível consultar o financeiro. Verifique as permissões do usuário.");
-  else{setFinanceError("");setFinance((f.data||[]).map((v:any)=>({id:v.id,unit:v.estabelecimentos.slug,type:v.tipo,category:v.categoria,desc:v.descricao,amount:Number(v.valor),method:v.forma_pagamento,date:v.data_lancamento})))}
+  if(f.error)setFinanceError("Não foi possível consultar todas as movimentações: "+f.error);
+  else{setFinanceError(f.truncated?"Há mais de 20 mil movimentações. Refine o intervalo para uma consulta completa.":"");setFinance((f.data||[]).map((v:any)=>({id:v.id,unit:v.estabelecimentos.slug,type:v.tipo,category:v.categoria,desc:v.descricao,amount:Number(v.valor),method:v.forma_pagamento,date:v.data_lancamento})))}
   setFinanceLoading(false);
  }
  useEffect(()=>{void reloadFinance()},[]);
