@@ -128,13 +128,13 @@ export default function ManagerPanel({entries,loading,error,onSignOut}:Props){
    const logo=new URL("/brands/"+asset+".png",window.location.origin).href;
    const logoSvg=new URL("/brands/"+asset+".svg",window.location.origin).href;
    const qrMarkup=new XMLSerializer().serializeToString(qr);
-   const html=\`<!doctype html><html lang="pt-BR"><head><meta charset="UTF-8"><title>Placa de opiniões - \${name}</title>
+   const html=`<!doctype html><html lang="pt-BR"><head><meta charset="UTF-8"><title>Placa de opiniões - ${name}</title>
    <style>
    @page{size:A4 portrait;margin:0}
    *{box-sizing:border-box}
    html,body{width:210mm;height:297mm;padding:0;margin:0;overflow:hidden;font-family:Arial,Helvetica,sans-serif;background:#fff;color:#14323d}
    .sheet{width:210mm;height:296mm;display:flex;flex-direction:column;overflow:hidden;text-align:center;background:#fff}
-   header{height:76mm;flex-shrink:0;background:\${color};border-bottom:4mm solid #f9cb28;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5mm;print-color-adjust:exact;-webkit-print-color-adjust:exact}
+   header{height:76mm;flex-shrink:0;background:${color};border-bottom:4mm solid #f9cb28;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5mm;print-color-adjust:exact;-webkit-print-color-adjust:exact}
    header img{width:139mm;height:49mm;object-fit:contain}
    header strong{font-size:16px;letter-spacing:3px}
    main{flex:1;min-height:0;padding:12mm 18mm 8mm;display:flex;flex-direction:column;justify-content:space-around;align-items:center;gap:4mm}
@@ -150,14 +150,14 @@ export default function ManagerPanel({entries,loading,error,onSignOut}:Props){
    footer{padding:5mm 8mm;background:#ecf5f4;flex-shrink:0;display:flex;flex-direction:column;gap:2mm;print-color-adjust:exact;-webkit-print-color-adjust:exact}
    footer strong{font-size:14px}footer small{font-size:11px}
    @media screen{body{margin:auto;box-shadow:0 0 20px #0002}}
-   </style></head><body><section class="sheet"><header><img src="\${logo}" alt="Logo \${name}" onerror="this.onerror=null;this.src='\${logoSvg}'"><strong>QUEREMOS OUVIR VOCÊ</strong></header>
+   </style></head><body><section class="sheet"><header><img src="${logo}" alt="Logo ${name}" onerror="this.onerror=null;this.src='${logoSvg}'"><strong>QUEREMOS OUVIR VOCÊ</strong></header>
    <main><span class="eyebrow">SUA OPINIÃO IMPORTA</span><h1>Como foi sua experiência?</h1><p class="hint">Escaneie o QR Code com a câmera do celular e conte o que achou.</p>
-   <div class="qr">\${qrMarkup}</div><strong class="scan">APONTE A CÂMERA PARA O QR CODE</strong>
+   <div class="qr">${qrMarkup}</div><strong class="scan">APONTE A CÂMERA PARA O QR CODE</strong>
    <div class="tags"><span>♡ Elogios</span><span>◉ Reclamações</span><span>✦ Sugestões</span><span>? Dúvidas</span></div>
    <p class="fine">Este canal é exclusivo para receber opiniões. Não realiza pedidos nem atendimento comercial.</p></main>
-   <footer><strong>\${name}</strong><small>Obrigado por nos ajudar a melhorar!</small></footer></section>
-   <script>window.addEventListener("load",function(){Promise.all(Array.from(document.images).map(function(img){return img.complete?Promise.resolve():new Promise(function(resolve){img.onload=resolve;img.onerror=resolve})})).then(function(){setTimeout(function(){window.focus();window.print()},350)})});<\/script>
-   </body></html>\`;
+   <footer><strong>${name}</strong><small>Obrigado por nos ajudar a melhorar!</small></footer></section>
+   <script>window.addEventListener("load",function(){Promise.all(Array.from(document.images).map(function(img){return img.complete?Promise.resolve():new Promise(function(resolve){img.onload=resolve;img.onerror=resolve})})).then(function(){setTimeout(function(){window.focus();window.print()},350)})});</script>
+   </body></html>`;
    popup.document.open();
    popup.document.write(html);
    popup.document.close();
