@@ -941,3 +941,40 @@
 @media(max-width:1350px){.mg-cash-filters{grid-template-columns:repeat(2,minmax(0,1fr))}.mg-cash-clear{justify-self:start}}
 @media(max-width:750px){.mg-cash-filters{grid-template-columns:1fr}.mg-cash-clear{width:100%}.mg-day-toolbar{flex-wrap:wrap;gap:10px}}
 @media print{.mg-cash-filters,.mg-day-actions,.mg-cash-clear{display:none!important}}
+
+
+/* Navegação do caixa, contador e rodapé institucional */
+.mg-day-toolbar .mg-cash-counter{display:inline-flex;align-items:center;gap:10px;padding:8px 13px;border:1px solid #c9e9d9;background:linear-gradient(115deg,#edfff7,#e4f9ef);border-radius:13px;color:#096c54;box-shadow:0 3px 12px #103d2b0b}
+.mg-cash-counter svg{color:#009d6b}
+.mg-cash-counter strong{font-size:19px;line-height:1;font-weight:900;letter-spacing:-.4px;font-variant-numeric:tabular-nums}
+.mg-cash-counter small{font-size:11px;color:#337e6b}
+.mg-cash-pagination{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;border-top:1px solid var(--mg-stroke);padding:16px 4px 2px;margin-top:16px;color:var(--mg-muted);font-size:12px}
+.mg-cash-pagination label{display:flex;align-items:center;gap:9px;flex-wrap:wrap;font-weight:650}
+.mg-cash-pagination select{padding:7px 28px 7px 10px;border-radius:9px;border:1px solid var(--mg-stroke);background:var(--mg-card);color:var(--mg-text);font:inherit;font-weight:800}
+.mg-cash-pagination nav{display:flex;align-items:center;gap:10px}
+.mg-cash-pagination nav>span{font-weight:700;color:var(--mg-text);font-variant-numeric:tabular-nums}
+.mg-cash-pagination nav button{display:grid;place-items:center;width:34px;height:34px;border-radius:9px;background:var(--mg-card);color:var(--mg-green);border:1px solid var(--mg-stroke);cursor:pointer}
+.mg-cash-pagination nav button:hover:not(:disabled){background:#ddfaeb;border-color:#88cbb1}
+.mg-cash-pagination nav button:disabled{opacity:.4;cursor:not-allowed}
+.mg-system-footer{margin:24px 29px 28px;padding:20px 24px;display:grid;grid-template-columns:1.05fr 1fr auto;gap:24px;align-items:center;border:1px solid var(--mg-stroke);border-radius:16px;background:linear-gradient(115deg,#fff,#f4faf8);box-shadow:0 7px 24px #1037440e}
+.mg-system-footer-brand,.mg-system-footer-middle,.mg-system-footer-clock{display:grid;align-content:center;gap:7px;min-width:0}
+.mg-system-footer-brand small{font-size:10px;letter-spacing:1.4px;color:#148669;font-weight:900}
+.mg-system-footer-brand strong{font-size:17px;color:var(--mg-text);letter-spacing:-.3px}
+.mg-system-footer-brand span,.mg-system-footer-middle>span{font-size:11px;color:var(--mg-muted);line-height:1.5}
+.mg-system-footer-brand b{color:var(--mg-text)}
+.mg-system-footer-links{display:flex;align-items:center;flex-wrap:wrap;gap:9px;font-size:11px;color:var(--mg-muted)}
+.mg-version-pill{display:inline-flex;align-items:center;padding:5px 11px;border:1px solid #c6d7f9;border-radius:99px;background:#edf3ff;color:#3e61a7;font-weight:800}
+.mg-footer-separator{color:#a9bec2}
+.mg-system-footer-clock{justify-items:end;text-align:right}
+.mg-system-footer-clock>span{display:flex;align-items:center;gap:6px;font-weight:800;text-transform:uppercase;letter-spacing:.75px;color:#5e8084;font-size:10px}
+.mg-system-footer-clock strong{font-size:13px;color:var(--mg-text);text-transform:capitalize}
+.mg-system-footer-clock time{font-size:18px;font-weight:900;font-variant-numeric:tabular-nums;color:#008a63}
+.mg-dark .mg-system-footer{background:linear-gradient(115deg,#172c34,#132b2b);border-color:var(--mg-stroke)}
+.mg-dark .mg-system-footer-brand span,.mg-dark .mg-system-footer-middle>span,.mg-dark .mg-system-footer-links{color:var(--mg-muted)}
+.mg-dark .mg-system-footer-clock>span{color:#a2c7c2}
+.mg-dark .mg-version-pill{background:#283f59;border-color:#45668e;color:#cbddff}
+.mg-dark .mg-day-toolbar .mg-cash-counter{background:#16413a;border-color:#2c6954;color:#b9f2d7}
+.mg-dark .mg-cash-counter small,.mg-dark .mg-cash-counter svg{color:#9ddcbd}
+@media(max-width:1100px){.mg-system-footer{grid-template-columns:1fr 1fr}.mg-system-footer-clock{grid-column:1/-1;justify-items:start;text-align:left}}
+@media(max-width:680px){.mg-system-footer{margin:18px 12px;padding:16px;grid-template-columns:1fr;gap:16px}.mg-system-footer-clock{grid-column:auto}.mg-cash-pagination{align-items:flex-start;flex-direction:column}.mg-day-toolbar .mg-cash-counter{width:100%;justify-content:center}}
+@media print{.mg-system-footer,.mg-cash-pagination{display:none!important}}
