@@ -212,7 +212,7 @@ export default function ManagerPanel({entries,loading,error,onSignOut}:Props){
   else{setActionMessage(editingEntry?"Lançamento atualizado com sucesso.":"Lançamento gravado com sucesso.");setEntryDesc("");setEntryValue("");setDisplayForm(false);setEditingEntry(null);await reloadFinance()}
   setSaving(false);
  }
-function openEditEntry(row:Entry){if(!canManageRow(row)){setActionMessage("Movimentação sem permissão ou pertencente a um dia fechado.");return}setEditingEntry(row);setEntryType(row.type);setEntryCategory(row.category);setEntryDesc(row.desc);setEntryValue(String(row.amount));setEntryMethod(row.method);setOperationUnit(row.unit);setOperationDate(row.date);setActionMessage("")}
+function openEditEntry(row:Entry){if(!canManageRow(row)){setActionMessage("Movimentação sem permissão ou pertencente a um dia fechado.");return}setEditingEntry(row);setEntryType(row.type);setEntryCategory(row.category);setEntryDesc(row.desc);setEntryValue(String(row.amount));setEntryMethod(row.method);setOperationUnit(row.unit);setOperationDate(row.date);if(view==="caixa"){setCashUnit(row.unit);setCashPeriod("dia");setCashDay(row.date);setDisplayForm(true)}setActionMessage("")}
  async function cancelEntry(row:Entry){if(!supabase||!canManageRow(row)){setActionMessage("Movimentação sem permissão ou pertencente a um dia fechado.");return}
  if(!window.confirm("Cancelar este lançamento de "+money(row.amount)+" de "+unitName(row.unit)+"? Ele permanecerá no histórico de auditoria e deixará de entrar nos totais."))return;
  setCancellingId(row.id);setActionMessage("");
