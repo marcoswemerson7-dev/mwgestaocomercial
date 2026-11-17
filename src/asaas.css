@@ -1,1 +1,12 @@
 .asaas-panel{display:grid;gap:18px}.asaas-top{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}.asaas-top small{font-weight:700;letter-spacing:.07em;color:#64748b}.asaas-top h1{margin:6px 0;font-size:27px}.asaas-top p{color:#64748b;margin:0}.asaas-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.asaas-notice{display:flex;gap:12px;align-items:center;padding:15px;border:1px solid #d3e3ed;border-radius:12px;background:rgba(42,116,182,.06);font-size:13px}.asaas-metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}.asaas-metrics>div{border:1px solid var(--border,#dce4ec);border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:8px;background:var(--card,#fff)}.asaas-metrics small{color:#64748b}.asaas-metrics strong{font-size:22px}.asaas-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:15px 0}.asaas-grid label{display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:600}.asaas-grid input,.asaas-grid select{padding:11px;border-radius:9px;border:1px solid #cbd5e1;background:var(--card,#fff);color:inherit;min-width:0}.asaas-form{padding:20px}.asaas-form p{color:#64748b}.asaas-form .asaas-actions{justify-content:flex-end}.asaas-panel td a{display:inline-flex;align-items:center;gap:3px}@media(max-width:900px){.asaas-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:550px){.asaas-grid,.asaas-metrics{grid-template-columns:1fr}.asaas-top h1{font-size:23px}}
+.asaas-client-summary{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:20px 24px;flex-wrap:wrap}
+.asaas-client-summary small{font-size:11px;letter-spacing:.07em;font-weight:700;color:#64748b}
+.asaas-client-summary h3{margin:6px 0}
+.asaas-client-summary p{margin:0;color:#64748b}
+.asaas-client-summary strong{display:block;margin-top:8px;font-size:20px}
+.asaas-status{display:inline-flex;align-items:center;border-radius:99px;padding:6px 10px;font-size:12px;font-weight:700;background:#e2e8f0;color:#334155}
+.asaas-status.paid{background:#dcfce7;color:#166534}
+.asaas-status.pending{background:#fef3c7;color:#92400e}
+.asaas-status.overdue{background:#fee2e2;color:#991b1b}
+.asaas-done{display:inline-flex;align-items:center;gap:6px;color:#15803d;font-weight:700}
+.asaas-panel .asaas-pay{display:inline-flex;align-items:center;gap:7px;white-space:nowrap;text-decoration:none;padding:9px 12px;font-size:12px}
