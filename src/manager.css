@@ -925,3 +925,19 @@
  .mg-shell .mg-sidebar.mg-collapsed .mg-manager-pill{width:auto!important;min-width:0!important;padding:9px 12px!important}
  .mg-shell .mg-sidebar.mg-collapsed .mg-sidebar-footer{display:grid!important;text-align:left!important}
 }
+
+
+/* Caixa do Dia: filtros completos e responsivos, consistentes com Relatórios */
+.mg-cash-filters{display:grid;grid-template-columns:repeat(3,minmax(0,1fr)) auto;align-items:end;gap:14px;margin:18px 0 22px}
+.mg-cash-filters label{display:grid;min-width:0;gap:8px;font-size:12px;font-weight:750;color:var(--mg-text)}
+.mg-cash-filters select,.mg-cash-filters input{width:100%;min-height:44px;padding:10px 12px;border:1px solid var(--mg-stroke);border-radius:10px;background:var(--mg-card);color:var(--mg-text);font:inherit}
+.mg-cash-filters select:focus-visible,.mg-cash-filters input:focus-visible{outline:2px solid #18be8e;outline-offset:2px}
+.mg-cash-clear{white-space:nowrap;min-height:44px;display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid var(--mg-stroke);border-radius:10px;padding:10px 15px;background:var(--mg-card);color:var(--mg-text);font-weight:750;cursor:pointer}
+.mg-cash-clear:hover{border-color:#69cfa6;background:var(--mg-bg)}
+.mg-cash-period-label{display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:800;color:var(--mg-green)}
+.mg-cash-list .mg-card-heading{gap:12px}
+.mg-day-actions .mg-day-action:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.mg-dark .mg-cash-filters select,.mg-dark .mg-cash-filters input,.mg-dark .mg-cash-clear{background:var(--mg-card);border-color:var(--mg-stroke);color:var(--mg-text)}
+@media(max-width:1350px){.mg-cash-filters{grid-template-columns:repeat(2,minmax(0,1fr))}.mg-cash-clear{justify-self:start}}
+@media(max-width:750px){.mg-cash-filters{grid-template-columns:1fr}.mg-cash-clear{width:100%}.mg-day-toolbar{flex-wrap:wrap;gap:10px}}
+@media print{.mg-cash-filters,.mg-day-actions,.mg-cash-clear{display:none!important}}
