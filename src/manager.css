@@ -978,3 +978,102 @@
 @media(max-width:1100px){.mg-system-footer{grid-template-columns:1fr 1fr}.mg-system-footer-clock{grid-column:1/-1;justify-items:start;text-align:left}}
 @media(max-width:680px){.mg-system-footer{margin:18px 12px;padding:16px;grid-template-columns:1fr;gap:16px}.mg-system-footer-clock{grid-column:auto}.mg-cash-pagination{align-items:flex-start;flex-direction:column}.mg-day-toolbar .mg-cash-counter{width:100%;justify-content:center}}
 @media print{.mg-system-footer,.mg-cash-pagination{display:none!important}}
+
+
+/* Estrutura de aplicativo: cabeçalho e rodapé persistentes; conteúdo central rolável */
+@media screen {
+ html,body,#root{height:100%;min-height:0}
+ .mg-shell{
+   display:flex;
+   height:100vh;
+   height:100dvh;
+   min-height:0;
+   max-height:100dvh;
+   overflow:hidden;
+ }
+ .mg-shell .mg-sidebar{
+   height:100%;
+   min-height:0;
+   max-height:100%;
+   flex-shrink:0;
+   overflow-x:hidden;
+   overflow-y:auto;
+   overscroll-behavior:contain;
+ }
+ .mg-shell .mg-main{
+   display:flex;
+   flex-direction:column;
+   flex:1 1 0;
+   min-width:0;
+   min-height:0;
+   height:100%;
+   max-height:100%;
+   overflow:hidden;
+ }
+ .mg-shell .mg-topbar{
+   flex:0 0 auto;
+   position:relative;
+   z-index:15;
+   width:100%;
+ }
+ .mg-shell .mg-content{
+   flex:1 1 auto;
+   min-height:0;
+   overflow-y:auto;
+   overflow-x:hidden;
+   overscroll-behavior:contain;
+   scrollbar-width:thin;
+   scrollbar-color:#a0c9c4 transparent;
+ }
+ .mg-shell .mg-content::-webkit-scrollbar{width:9px}
+ .mg-shell .mg-content::-webkit-scrollbar-thumb{background:#a0c9c4;border-radius:9px}
+ .mg-shell .mg-content::-webkit-scrollbar-track{background:transparent}
+ .mg-shell .mg-system-footer{
+   flex:0 0 auto;
+   position:relative;
+   z-index:14;
+   margin:0 16px 12px;
+   padding:13px 22px;
+   box-shadow:0 -4px 24px #10374412;
+   border-radius:14px;
+ }
+ .mg-shell .mg-system-footer-clock time{
+   font-size:19px;
+   letter-spacing:.3px;
+   font-variant-numeric:tabular-nums;
+   white-space:nowrap;
+ }
+ .mg-shell .mg-system-footer-clock strong{white-space:nowrap}
+}
+@media screen and (max-width:1100px){
+ .mg-shell .mg-system-footer{grid-template-columns:1fr auto;gap:15px;padding:10px 15px}
+ .mg-shell .mg-system-footer-middle{display:none}
+ .mg-shell .mg-system-footer-clock{grid-column:auto;justify-items:end;text-align:right}
+}
+@media screen and (max-width:680px){
+ .mg-shell .mg-topbar{height:auto;min-height:65px;flex-wrap:wrap}
+ .mg-shell .mg-system-footer{grid-template-columns:1fr auto;gap:9px;margin:0 7px 6px;padding:9px 10px}
+ .mg-shell .mg-system-footer-brand{gap:2px}
+ .mg-shell .mg-system-footer-brand small{font-size:8px;letter-spacing:.5px}
+ .mg-shell .mg-system-footer-brand strong{font-size:12px}
+ .mg-shell .mg-system-footer-brand span{font-size:9px;line-height:1.25}
+ .mg-shell .mg-system-footer-clock{grid-column:auto;gap:3px;justify-items:end;text-align:right}
+ .mg-shell .mg-system-footer-clock>span{font-size:9px}
+ .mg-shell .mg-system-footer-clock strong{font-size:10px;white-space:normal;max-width:130px}
+ .mg-shell .mg-system-footer-clock time{font-size:15px}
+}
+@media screen and (max-width:380px){
+ .mg-shell .mg-system-footer-brand span{display:none}
+ .mg-shell .mg-system-footer-clock strong{display:none}
+}
+@media print{
+ html,body,#root{height:auto!important;min-height:0!important;overflow:visible!important}
+ .mg-shell,.mg-shell .mg-main,.mg-shell .mg-content{
+   display:block!important;
+   height:auto!important;
+   min-height:0!important;
+   max-height:none!important;
+   overflow:visible!important;
+ }
+ .mg-shell .mg-system-footer{display:none!important}
+}
