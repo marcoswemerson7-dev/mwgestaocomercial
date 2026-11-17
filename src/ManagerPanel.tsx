@@ -44,9 +44,9 @@ function DownloadCsv({rows}:{rows:Entry[]}){return <button className="mg-btn sec
 export default function ManagerPanel({entries,loading,error,onSignOut}:Props){
  const [printPlate,setPrintPlate]=useState<"supermercado"|"acai"|null>(null);
  const [clockNow,setClockNow]=useState(()=>new Date());
- useEffect(()=>{const interval=window.setInterval(()=>setClockNow(new Date()),30000);return ()=>window.clearInterval(interval)},[]);
+ useEffect(()=>{const interval=window.setInterval(()=>setClockNow(new Date()),1000);return ()=>window.clearInterval(interval)},[]);
  const footerDate=clockNow.toLocaleDateString("pt-BR",{weekday:"long",day:"2-digit",month:"long",year:"numeric"});
- const footerTime=clockNow.toLocaleTimeString("pt-BR",{hour:"2-digit",minute:"2-digit"});
+ const footerTime=clockNow.toLocaleTimeString("pt-BR",{hour:"2-digit",minute:"2-digit",second:"2-digit",hour12:false});
  const [view,setView]=useState<View>("dashboard"),[unit,setUnit]=useState<Unit>("todos"),[period,setPeriod]=useState("30"),[mobile,setMobile]=useState(false),[tickets,setTickets]=useState<Ticket[]>([]),[ticketsLoading,setTicketsLoading]=useState(true),[ticketsError,setTicketsError]=useState(""),[selectedTicket,setSelectedTicket]=useState<Ticket|null>(null),[ticketSearch,setTicketSearch]=useState(""),[ticketStatus,setTicketStatus]=useState("todos"),[replyMessage,setReplyMessage]=useState(""),[replyStatus,setReplyStatus]=useState("em_analise"),[replySaving,setReplySaving]=useState(false),[replyError,setReplyError]=useState(""),[responses,setResponses]=useState<{id:string;mensagem:string;criada_em:string}[]>([]);
  async function refreshTickets(){
  if(!supabase)return;
