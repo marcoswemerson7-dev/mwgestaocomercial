@@ -1182,3 +1182,41 @@
  .mg-shell .mg-cash-business-marker{display:none!important}
  .mg-shell .mg-cash-business-banners{break-inside:avoid}
 }
+
+
+/* Rodapé compacto e discreto — mantém a data/hora fixa, libera espaço útil */
+@media screen {
+ .mg-shell .mg-system-footer{
+  margin:0 12px 7px;
+  padding:7px 15px;
+  min-height:48px;
+  gap:12px;
+  grid-template-columns:minmax(0,1.1fr) minmax(0,1fr) auto;
+  border-radius:10px;
+  box-shadow:0 2px 10px #10374409;
+  align-items:center;
+ }
+ .mg-shell .mg-system-footer-brand,
+ .mg-shell .mg-system-footer-middle,
+ .mg-shell .mg-system-footer-clock{gap:2px}
+ .mg-shell .mg-system-footer-brand small{font-size:8px;letter-spacing:.8px}
+ .mg-shell .mg-system-footer-brand strong{font-size:12px}
+ .mg-shell .mg-system-footer-brand span{font-size:9px}
+ .mg-shell .mg-system-footer-middle>span{font-size:10px}
+ .mg-shell .mg-system-footer-links{gap:7px;font-size:10px}
+ .mg-shell .mg-version-pill{padding:3px 8px;font-size:9px}
+ .mg-shell .mg-system-footer-clock>span{font-size:9px;letter-spacing:.3px}
+ .mg-shell .mg-system-footer-clock strong{font-size:10px}
+ .mg-shell .mg-system-footer-clock time{font-size:15px;line-height:1.15}
+}
+@media screen and (max-width:1100px){
+ .mg-shell .mg-system-footer{grid-template-columns:minmax(0,1fr) auto}
+ .mg-shell .mg-system-footer-middle{display:none}
+}
+@media screen and (max-width:680px){
+ .mg-shell .mg-system-footer{margin:0 6px 5px;padding:6px 9px;min-height:42px;gap:7px}
+ .mg-shell .mg-system-footer-brand strong{font-size:11px}
+ .mg-shell .mg-system-footer-brand span{display:none}
+ .mg-shell .mg-system-footer-clock strong{font-size:9px}
+ .mg-shell .mg-system-footer-clock time{font-size:13px}
+}
