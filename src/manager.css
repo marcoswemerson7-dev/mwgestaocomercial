@@ -1077,3 +1077,108 @@
  }
  .mg-shell .mg-system-footer{display:none!important}
 }
+
+
+/* Correção de regressão: conteúdo em largura integral com cabeçalho/rodapé fixos */
+@media screen {
+ .mg-shell .mg-main>.mg-content{
+   width:100%;
+   max-width:none;
+   margin:0;
+   padding:24px 26px 28px;
+   align-self:stretch;
+   box-sizing:border-box;
+   flex:1 1 0;
+   min-width:0;
+   min-height:0;
+   overflow-y:auto;
+   overflow-x:hidden;
+ }
+ .mg-shell .mg-main>.mg-content>.mg-card,
+ .mg-shell .mg-main>.mg-content>.mg-banners,
+ .mg-shell .mg-main>.mg-content>.mg-heading{
+   width:100%;
+   max-width:none;
+   margin-left:0;
+   margin-right:0;
+ }
+ .mg-shell .mg-main>.mg-content .mg-day-card,
+ .mg-shell .mg-main>.mg-content .mg-cash-list{
+   width:100%;
+   max-width:none;
+   min-width:0;
+ }
+ .mg-shell .mg-cash-business-banners{
+   width:100%;
+   display:grid;
+   grid-template-columns:repeat(2,minmax(0,1fr));
+   gap:14px;
+   margin:0 0 18px;
+ }
+ .mg-shell .mg-cash-business-button{
+   width:100%;
+   min-width:0;
+   position:relative;
+   display:block;
+   padding:0;
+   border:0;
+   border-radius:17px;
+   background:transparent;
+   text-align:left;
+   cursor:pointer;
+ }
+ .mg-shell .mg-cash-business-button .mg-unit{
+   min-height:125px;
+   width:100%;
+   padding:16px 20px;
+   transition:transform .16s ease,box-shadow .16s ease;
+ }
+ .mg-shell .mg-cash-business-button .mg-logo-typography{
+   min-width:0;
+   flex:1.1;
+ }
+ .mg-shell .mg-cash-business-button .mg-brand-image{
+   height:95px;
+   max-height:95px;
+   width:100%;
+   object-fit:contain;
+ }
+ .mg-shell .mg-cash-business-button .mg-unit-info{flex:1;min-width:0}
+ .mg-shell .mg-cash-business-button.selected .mg-unit{
+   box-shadow:0 0 0 2px #ffd54c,0 8px 19px #09344b25;
+ }
+ .mg-shell .mg-cash-business-button:hover .mg-unit{transform:translateY(-2px)}
+ .mg-shell .mg-cash-business-button:focus-visible{
+   outline:3px solid #00a66b;
+   outline-offset:4px;
+ }
+ .mg-shell .mg-cash-business-marker{
+   position:absolute;
+   right:12px;
+   top:10px;
+   border-radius:99px;
+   padding:5px 9px;
+   display:none;
+   align-items:center;
+   gap:5px;
+   background:#ffffffed;
+   color:#067858;
+   font-size:10px;
+   font-weight:800;
+ }
+ .mg-shell .mg-cash-business-button.selected .mg-cash-business-marker{display:inline-flex}
+}
+@media screen and (max-width:1000px) {
+ .mg-shell .mg-main>.mg-content{padding:18px 16px 22px}
+ .mg-shell .mg-cash-business-button .mg-unit{padding:13px;gap:10px}
+ .mg-shell .mg-cash-business-button .mg-brand-image{height:80px;max-height:80px}
+}
+@media screen and (max-width:730px) {
+ .mg-shell .mg-cash-business-banners{grid-template-columns:1fr}
+ .mg-shell .mg-cash-business-button .mg-unit{min-height:112px}
+ .mg-shell .mg-main>.mg-content{padding:16px 12px 20px}
+}
+@media print{
+ .mg-shell .mg-cash-business-marker{display:none!important}
+ .mg-shell .mg-cash-business-banners{break-inside:avoid}
+}
