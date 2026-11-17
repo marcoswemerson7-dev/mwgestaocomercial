@@ -1230,3 +1230,34 @@
 .mg-opinion-delete:focus-visible{outline:2px solid #d95656;outline-offset:2px}
 .mg-dark .mg-opinion-delete{background:#402829;color:#ffc0c0;border-color:#704145}
 .mg-dark .mg-opinion-delete:hover:not(:disabled){background:#573234}
+
+
+/* Nova movimentação: ação superior e formulário em janela central */
+.mg-finance-screen-actions{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:17px 20px;margin:0 0 16px;background:linear-gradient(110deg,var(--mg-card),var(--mg-bg));border:1px solid var(--mg-stroke);border-radius:15px}
+.mg-finance-screen-actions>div{display:grid;gap:5px}
+.mg-finance-screen-actions strong{font-size:16px;font-weight:850;color:var(--mg-text)}
+.mg-finance-screen-actions small{font-size:11px;color:var(--mg-muted)}
+.mg-finance-screen-actions .mg-eyebrow{font-size:10px;font-weight:850;color:#008f68;letter-spacing:1px}
+.mg-finance-screen-actions .mg-btn{min-height:43px;white-space:nowrap}
+.mg-entry-overlay{z-index:115;display:flex;align-items:center;justify-content:center;padding:16px;overflow:auto;overscroll-behavior:contain}
+.mg-entry-dialog{background:var(--mg-card);color:var(--mg-text);width:min(680px,100%);max-height:min(92vh,870px);overflow:auto;border:1px solid var(--mg-stroke);border-radius:19px;box-shadow:0 22px 72px #062b3880}
+.mg-entry-dialog-head{display:flex;align-items:center;gap:14px;padding:22px 25px;background:linear-gradient(105deg,#f2fdf7,#fff);border-bottom:1px solid var(--mg-stroke)}
+.mg-entry-head-icon{display:grid;place-items:center;min-width:48px;height:48px;border-radius:14px;color:#04855c;background:#d6f7e7}
+.mg-entry-dialog-head>div:nth-child(2){flex:1}
+.mg-entry-dialog-head span{font-size:10px;font-weight:900;letter-spacing:1.1px;color:#07865e}
+.mg-entry-dialog-head h2{font-size:21px;letter-spacing:-.5px;margin:4px 0 2px;color:var(--mg-text)}
+.mg-entry-dialog-head p{font-size:12px;color:var(--mg-muted);margin:0}
+.mg-entry-dismiss{display:grid;place-items:center;min-width:38px;height:38px;border-radius:10px;background:var(--mg-card);border:1px solid var(--mg-stroke);color:var(--mg-muted);cursor:pointer}
+.mg-entry-dismiss:hover{color:var(--mg-text);background:var(--mg-bg)}
+.mg-entry-dialog-content{padding:23px 25px 25px}
+.mg-entry-dialog-unit{display:flex;align-items:center;gap:8px;color:#068b66;font-weight:800;font-size:12px;margin-bottom:11px}
+.mg-entry-dialog-content>.mg-form-grid{margin-bottom:18px}
+.mg-entry-dialog-separator{border-top:1px solid var(--mg-stroke);padding-top:16px;margin:0 0 13px;font-size:10px;letter-spacing:1.2px;color:var(--mg-muted);font-weight:900}
+.mg-entry-dialog .mg-finance-form{border:0;background:transparent;padding:0;gap:17px}
+.mg-entry-dialog .mg-finance-form label{font-weight:750}
+.mg-entry-dialog .mg-finance-form .mg-btn{justify-self:end;min-width:175px;min-height:43px}
+.mg-entry-dialog-help{display:flex;align-items:center;gap:8px;color:var(--mg-muted);font-size:11px;margin-top:17px;padding-top:15px;border-top:1px solid var(--mg-stroke)}
+.mg-dark .mg-entry-dialog-head{background:linear-gradient(100deg,#173c36,#21343b)}
+.mg-dark .mg-entry-head-icon{background:#225447;color:#9ff3c7}
+@media(max-width:650px){.mg-finance-screen-actions{align-items:stretch;flex-direction:column;padding:14px}.mg-finance-screen-actions .mg-btn{justify-content:center}.mg-entry-overlay{padding:6px}.mg-entry-dialog{max-height:98vh;border-radius:14px}.mg-entry-dialog-head{padding:16px;gap:10px}.mg-entry-dialog-head h2{font-size:17px}.mg-entry-dialog-content{padding:16px}.mg-entry-dialog .mg-form-grid{grid-template-columns:1fr}.mg-entry-dialog .mg-finance-form .mg-btn{width:100%}}
+@media print{.mg-entry-overlay{display:none!important}}
