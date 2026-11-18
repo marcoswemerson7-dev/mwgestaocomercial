@@ -1312,3 +1312,15 @@
 @media screen and (max-width:900px){.mg-dashboard-extra{grid-template-columns:1fr}.mg-dashboard-filter-fields label{flex-basis:40%}.mg-dashboard-topbar .mg-top-filters{flex-basis:auto;width:auto}}
 @media screen and (max-width:600px){.mg-dashboard-filter-card{padding:14px}.mg-dashboard-filter-fields label{flex-basis:100%}.mg-dashboard-filter-fields .mg-btn{width:100%;justify-content:center}.mg-dashboard-extra .mg-chart{height:260px}.mg-dashboard-topbar .mg-top-filters{flex:0}.mg-dashboard-controls .mg-period-chip{white-space:normal;font-size:11px}}
 @media print{.mg-dashboard-filter-card{display:none!important}}
+
+/* Financial reports: separate ledgers, subtotals and one final balance. */
+.mg-report-sheet .mg-report-single-summary{grid-template-columns:minmax(0,1fr);max-width:460px}
+.mg-report-ledger-head{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 14px;border-radius:8px 8px 0 0;background:#e9f7f1;border-left:4px solid #078361;color:#14634c}
+.mg-report-ledger-head.expense{background:#fff0ef;border-left-color:#ce515c;color:#963b45}
+.mg-report-ledger-head h3{margin:0!important;font-size:13px!important;color:inherit!important}.mg-report-ledger-head>span{font-size:11px;white-space:nowrap}
+.mg-report-subtotal{display:flex;justify-content:space-between;gap:15px;padding:12px 14px;background:#f0f8f4;color:#14634c;border-bottom:2px solid #b3d9c8;font-size:12px}
+.mg-report-subtotal.expense{background:#fff5f4;color:#963b45;border-color:#edc3c6}.mg-report-subtotal strong{font-size:15px}
+.mg-report-accounting-note{font-size:11px;color:#647780;padding:10px 13px;border:1px solid #dce6e8;border-radius:8px;line-height:1.6}
+.mg-report-categories tfoot th{border-top:2px solid #b8cdd0;padding:11px;background:#edf3f5;color:#193443}
+@media screen and (max-width:600px){.mg-report-ledger-head{flex-wrap:wrap}.mg-report-subtotal{flex-wrap:wrap}.mg-report-single-summary{max-width:none!important}}
+@media print{.mg-report-sheet .mg-report-single-summary{grid-template-columns:minmax(0,1fr)!important}.mg-report-ledger-head{break-after:avoid}.mg-report-subtotal{break-inside:avoid;break-before:avoid}.mg-report-accounting-note{font-size:8px}.mg-report-subtotal strong{font-size:11px}.mg-report-categories tfoot{display:table-row-group}}
