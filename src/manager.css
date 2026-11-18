@@ -1337,3 +1337,7 @@
 .mg-dashboard-controls .mg-dashboard-filter-card>.mg-dashboard-filter-fields{display:flex;align-items:end;gap:9px;margin:0}
 .mg-unit-open:has(.mg-neutral-unit) .mg-unit-open-label{color:#173c49}
 @media screen and (min-width:1200px){.mg-dashboard-banners:has(.mg-neutral-unit),.mg-cash-business-banners:has(.mg-neutral-unit),.mg-finance-unit-tabs:has(.mg-academia-camara-fria){grid-template-columns:repeat(3,minmax(0,1fr))}.mg-dashboard-banners:has(.mg-neutral-unit) .mg-unit{padding:16px;gap:12px}.mg-dashboard-banners:has(.mg-neutral-unit) .mg-unit-info{padding-left:12px}.mg-dashboard-banners:has(.mg-neutral-unit) .mg-unit-info strong{font-size:13px}}
+
+.mg-report-signature{width:min(100%,390px);margin:54px auto 24px;display:grid;gap:9px;text-align:center;color:#334e5a;break-inside:avoid;page-break-inside:avoid}
+.mg-report-signature-line{border-top:1px solid #526b75;width:100%}.mg-report-signature strong{font-size:12px;font-weight:700}.mg-report-signature span{font-size:11px;line-height:1.6;text-align:left;overflow-wrap:anywhere}
+@media print{.mg-report-signature{width:95mm;max-width:100%;margin:18mm auto 7mm;break-inside:avoid!important;page-break-inside:avoid!important}.mg-report-signature strong{font-size:10px!important}.mg-report-signature span{font-size:9px!important}.mg-report-signature-line{border-top:1px solid #333!important}}
