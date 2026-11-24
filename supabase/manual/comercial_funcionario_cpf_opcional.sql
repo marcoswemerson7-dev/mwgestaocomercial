@@ -1,0 +1,1 @@
+alter table public.comercial_funcionarios add column if not exists cpf text check (cpf is null or cpf ~ '^[0-9]{11}$');
